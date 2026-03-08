@@ -500,23 +500,6 @@ export const ApplicationForm = () => {
                           <CheckCircle className="w-4 h-4" /> Candidature envoyée ✓
                         </p>
                       )}
-                      <p className="text-base md:text-lg font-semibold text-foreground mb-5 md:mb-6">
-                        Score final : <span className="text-bismuth-teal">{totalScore}</span> / {quizQuestions.filter((q) => q.type === "choice").length * 5}
-                      </p>
-
-                      {qualified && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.5 }}
-                          className="inline-block px-5 md:px-6 py-2.5 md:py-3 rounded-lg font-semibold text-sm md:text-base"
-                          style={{
-                            background: `linear-gradient(135deg, hsl(var(--bismuth-teal)), hsl(var(--bismuth-purple)))`,
-                          }}
-                        >
-                          <span className="text-foreground">Profil Qualifié ✨</span>
-                        </motion.div>
-                      )}
 
                       <div className="mt-6 md:mt-8">
                         <Button
