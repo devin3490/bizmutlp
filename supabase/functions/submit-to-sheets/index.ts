@@ -81,12 +81,21 @@ async function getAccessToken(creds: ServiceAccountCredentials): Promise<string>
 
   const unsignedJwt = `${strToBase64Url(header)}.${strToBase64Url(claim)}`;
 
-  // Parse PEM private key - handle both literal \n and actual newlines
-  const privateKey = creds.private_key.replace(/\\n/g, "\n");
+  // Parse PEM private key - handle various escape formats
+  let privateKey = creds.private_key;
+  // Replace literal \n sequences with actual newlines
+  privateKey = privateKey.replace(/\\n/g, "\n");
+  // Also handle double-escaped \\n
+  privateKey = privateKey.replace(/\\\\n/g, "\n");
+  
   const pemBody = privateKey
     .replace(/-----BEGIN PRIVATE KEY-----/g, "")
     .replace(/-----END PRIVATE KEY-----/g, "")
     .replace(/[\r\n\s]/g, "");
+
+  console.log("PEM body length:", pemBody.length);
+  console.log("PEM body first 20 chars:", pemBody.substring(0, 20));
+  console.log("PEM body last 20 chars:", pemBody.substring(pemBody.length - 20));
 
   // Decode base64 PEM to binary using atob
   const binaryStr = atob(pemBody);
