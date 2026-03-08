@@ -6,6 +6,7 @@ import lifestyleNetworking from "@/assets/lifestyle-networking.jpg";
 import lifestyleJet from "@/assets/lifestyle-jet.jpg";
 import lifestyleApartment from "@/assets/lifestyle-apartment.jpg";
 import lifestyleMeeting from "@/assets/lifestyle-meeting.jpg";
+import lifestyleGames from "@/assets/lifestyle-games.png";
 import lifestyleHousing from "@/assets/lifestyle-housing.png";
 import lifestyleTrip from "@/assets/lifestyle-trip.png";
 
@@ -78,6 +79,13 @@ const lifestyleData = [
     description: "Chaque été, Bizmut organise son emblématique voyage de fin de saison pour récompenser les performeurs. L'année passée, c'était en République Dominicaine. Cette année? Une destination luxueuse… et mystère. Reste à l'affût.",
     image: lifestyleTrip,
     imageAlt: "Voyage Bizmut été 2025 en République Dominicaine",
+  },
+  {
+    badge: "Bizmut Games",
+    headline: "Des compétitions tout l'été pour gagner gros",
+    description: "Les Bizmut Games, c'est bien plus que des ventes. Tout au long de l'été, on organise des défis et des compétitions où tu peux gagner des prix incroyables — laptops, PS5 et plus encore. Parce qu'on est des gens qui aiment avoir du fun dans la vie.",
+    image: lifestyleGames,
+    imageAlt: "Bizmut Games — prix à gagner tout l'été",
   },
   {
     badge: "Accès privilégié",
