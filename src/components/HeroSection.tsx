@@ -38,9 +38,16 @@ Bizmut
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] mb-6 text-gold"
+              className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] mb-6 tracking-tight"
             >
-              Gagne 25 000 $ cet été grâce au porte-à-porte.
+              <span className="text-foreground">Gagne </span>
+              <span className="bg-gradient-to-r from-bismuth-gold via-bismuth-pink to-bismuth-purple bg-clip-text text-transparent">
+                25 000 $
+              </span>
+              <br />
+              <span className="text-foreground">cet été grâce au</span>
+              <br />
+              <span className="text-bismuth-teal italic">porte-à-porte.</span>
             </motion.h1>
 
           </motion.div>
