@@ -169,7 +169,7 @@ serve(async (req) => {
       throw new Error("GOOGLE_CREDENTIALS_JSON is not configured");
     }
 
-    const creds: ServiceAccountCredentials = JSON.parse(credentialsJson);
+    const creds = parseServiceAccountCredentials(credentialsJson);
 
     const { answers, totalScore, qualified } = await req.json();
 
