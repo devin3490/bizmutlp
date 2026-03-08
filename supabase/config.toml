@@ -2,3 +2,6 @@ project_id = "uyihadmypmduzlsaejiu"
 
 [functions.submit-to-sheets]
 verify_jwt = false
+
+[functions.score-answers]
+verify_jwt = false

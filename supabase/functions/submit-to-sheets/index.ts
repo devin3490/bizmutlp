@@ -181,8 +181,9 @@ serve(async (req) => {
     }
     console.log("Using client_email:", creds.client_email);
 
-    const { answers, totalScore, qualified } = await req.json();
+    const { answers, totalScore, qualified, aiData } = await req.json();
     const a = answers as Record<string, { label: string; score: number }>;
+    const ai = aiData || {};
 
     const timestamp = new Date().toISOString();
     const row: string[] = [
@@ -196,24 +197,30 @@ serve(async (req) => {
       a["6"]?.label ?? "",                       // Ville de résidence
       a["7"]?.label ?? "",                       // Expérience porte-à-porte
       a["8"]?.label ?? "",                       // Q1 environnement
-      a["8"] ? String(a["8"].score) : "",        // Score question 1
+      ai.ai_scores?.["8"] ? String(ai.ai_scores["8"].score) : String(a["8"]?.score ?? ""),
       a["9"]?.label ?? "",                       // Q2 inacceptable
-      a["9"] ? String(a["9"].score) : "",        // Score question 2
+      ai.ai_scores?.["9"] ? String(ai.ai_scores["9"].score) : String(a["9"]?.score ?? ""),
       a["10"]?.label ?? "",                      // Q3 type de journée
-      a["10"] ? String(a["10"].score) : "",      // Score question 3
+      ai.ai_scores?.["10"] ? String(ai.ai_scores["10"].score) : String(a["10"]?.score ?? ""),
       a["11"]?.label ?? "",                      // Q4 situation récente
-      a["11"] ? String(a["11"].score) : "",      // Score question 4
+      ai.ai_scores?.["11"] ? String(ai.ai_scores["11"].score) : String(a["11"]?.score ?? ""),
       a["12"]?.label ?? "",                      // Q5 objectif important
-      a["12"] ? String(a["12"].score) : "",      // Score question 5
+      ai.ai_scores?.["12"] ? String(ai.ai_scores["12"].score) : String(a["12"]?.score ?? ""),
       a["13"]?.label ?? "",                      // Q6 mériter ta place
-      a["13"] ? String(a["13"].score) : "",      // Score question 6
+      ai.ai_scores?.["13"] ? String(ai.ai_scores["13"].score) : String(a["13"]?.score ?? ""),
       a["14"]?.label ?? "",                      // Q7 modèle de travail
-      a["14"] ? String(a["14"].score) : "",      // Score question 7
+      ai.ai_scores?.["14"] ? String(ai.ai_scores["14"].score) : String(a["14"]?.score ?? ""),
       a["15"]?.label ?? "",                      // Q8 moments de croissance
-      a["15"] ? String(a["15"].score) : "",      // Score question 8
+      ai.ai_scores?.["15"] ? String(ai.ai_scores["15"].score) : String(a["15"]?.score ?? ""),
       a["16"]?.label ?? "",                      // Q9 sous pression
-      a["16"] ? String(a["16"].score) : "",      // Score question 9
-      String(totalScore),                        // Column 28
+      ai.ai_scores?.["16"] ? String(ai.ai_scores["16"].score) : String(a["16"]?.score ?? ""),
+      String(ai.total_score_raw ?? totalScore),  // Score brut
+      String(ai.coherence_coef ?? ""),           // Coeff cohérence
+      String(ai.total_score_adjusted ?? ""),     // Score ajusté
+      ai.status ?? (qualified ? "qualified" : "not_qualified"), // Statut
+      ai.coherence_reasoning ?? "",              // Raisonnement cohérence
+      // AI reasoning per open question
+      ...(["9", "11", "13", "15", "16"].map(qId => ai.ai_scores?.[qId]?.reasoning ?? "")),
     ];
 
     const accessToken = await getAccessToken(creds);
