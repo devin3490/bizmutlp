@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { BismuthGeometry } from "./BismuthGeometry";
 
 export const ApplicationForm = () => (
-  <section id="application" className="py-24 relative">
+  <section id="application" className="py-8 relative">
     <BismuthGeometry />
 
     <div className="container mx-auto px-6 relative z-10">
