@@ -159,15 +159,43 @@ export const ApplicationForm = () => {
     [advance]
   );
 
+  const isEmailQuestion = question?.type === "text" && question.placeholder?.includes("@");
+
+  const validateTextInput = useCallback((val: string): string | null => {
+    if (!val.trim()) return null;
+    if (isEmailQuestion) {
+      if (!val.includes("@")) return "Veuillez entrer une adresse courriel valide (avec @).";
+      return null;
+    }
+    // For textarea and non-email text: 7 words minimum
+    if (question?.type === "textarea" || (question?.type === "text" && !isEmailQuestion)) {
+      const wordCount = val.trim().split(/\s+/).filter(Boolean).length;
+      if (wordCount < 7) return `Minimum 7 mots requis (${wordCount}/7).`;
+    }
+    return null;
+  }, [question, isEmailQuestion]);
+
   const handleTextSubmit = useCallback(() => {
     const val = textValue.trim();
     if (!val) return;
+    const error = validateTextInput(val);
+    if (error) {
+      setValidationError(error);
+      return;
+    }
+    setValidationError("");
     advance(val, 0);
-  }, [textValue, advance]);
+  }, [textValue, advance, validateTextInput]);
 
   const handleOtherSubmit = useCallback(() => {
     const val = otherValue.trim();
     if (!val) return;
+    const wordCount = val.split(/\s+/).filter(Boolean).length;
+    if (wordCount < 7) {
+      setValidationError(`Minimum 7 mots requis (${wordCount}/7).`);
+      return;
+    }
+    setValidationError("");
     advance(`Autre : ${val}`, 3);
   }, [otherValue, advance]);
 
