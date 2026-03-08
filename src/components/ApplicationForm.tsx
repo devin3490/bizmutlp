@@ -168,7 +168,7 @@ export const ApplicationForm = () => {
       return null;
     }
     // For textarea and non-email text: 7 words minimum
-    if (question?.type === "textarea" || (question?.type === "text" && !isEmailQuestion)) {
+    if (question?.type === "textarea") {
       const wordCount = val.trim().split(/\s+/).filter(Boolean).length;
       if (wordCount < 7) return `Minimum 7 mots requis (${wordCount}/7).`;
     }
