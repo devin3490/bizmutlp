@@ -28,9 +28,9 @@ interface QuizSession {
 const loadSession = (): QuizSession => {
   try {
     const raw = localStorage.getItem(SESSION_KEY);
-    if (raw) return JSON.parse(raw);
+  if (raw) return JSON.parse(raw);
   } catch {}
-  return { answers: {}, currentQuestion: 0, totalScore: 0, completed: false, timestamps: {} };
+  return { answers: {}, currentQuestion: 0, totalScore: 0, completed: false, submitted: false, timestamps: {} };
 };
 
 const saveSession = (session: QuizSession) => {
