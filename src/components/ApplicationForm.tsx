@@ -462,9 +462,7 @@ export const ApplicationForm = () => {
                         className="mb-5 md:mb-6"
                       >
                         <CheckCircle
-                          className={`w-12 h-12 md:w-16 md:h-16 mx-auto ${
-                            qualified ? "text-emerald-400" : "text-amber-400"
-                          }`}
+                          className="w-12 h-12 md:w-16 md:h-16 mx-auto text-emerald-400"
                         />
                       </motion.div>
 
