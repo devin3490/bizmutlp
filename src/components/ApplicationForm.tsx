@@ -82,9 +82,26 @@ export const ApplicationForm = () => {
     if (submitted || submitting) return;
     setSubmitting(true);
     try {
-      const qualified = finalScore >= SCORE_THRESHOLD;
+      // Step 1: AI scoring
+      let aiData = null;
+      try {
+        const { data: scoreData, error: scoreError } = await supabase.functions.invoke("score-answers", {
+          body: { answers: finalAnswers },
+        });
+        if (!scoreError && scoreData) {
+          aiData = scoreData;
+          console.log("AI scoring result:", scoreData);
+        } else {
+          console.warn("AI scoring failed, continuing without:", scoreError);
+        }
+      } catch (aiErr) {
+        console.warn("AI scoring error, continuing without:", aiErr);
+      }
+
+      // Step 2: Submit to Google Sheets with AI data
+      const qualified = aiData ? aiData.qualified : finalScore >= SCORE_THRESHOLD;
       const { data, error } = await supabase.functions.invoke("submit-to-sheets", {
-        body: { answers: finalAnswers, totalScore: finalScore, qualified },
+        body: { answers: finalAnswers, totalScore: finalScore, qualified, aiData },
       });
       if (error) throw error;
       setSession(prev => ({ ...prev, submitted: true }));
