@@ -48,7 +48,13 @@ function parseServiceAccountCredentials(raw: string): ServiceAccountCredentials 
   const direct = tryParse(rawTrimmed);
   if (direct) return direct;
 
-  // 2) Remove markdown code fences
+  // 2) Wrap with braces if missing (secret saved without outer {})
+  if (!rawTrimmed.startsWith("{")) {
+    const wrapped = tryParse(`{${rawTrimmed}}`);
+    if (wrapped) return wrapped;
+  }
+
+  // 3) Remove markdown code fences
   const withoutFences = rawTrimmed
     .replace(/^```json\s*/i, "")
     .replace(/^```\s*/i, "")
@@ -57,7 +63,7 @@ function parseServiceAccountCredentials(raw: string): ServiceAccountCredentials 
   const fenced = tryParse(withoutFences);
   if (fenced) return fenced;
 
-  // 3) Extract object portion only
+  // 4) Extract object portion only
   const firstBrace = withoutFences.indexOf("{");
   const lastBrace = withoutFences.lastIndexOf("}");
   if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
