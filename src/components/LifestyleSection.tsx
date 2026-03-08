@@ -65,7 +65,7 @@ const lifestyleData = [
     image: lifestyleGoogleReviews,
     imageAlt: "4.8 sur 5 étoiles sur Google Reviews",
     link: {
-      url: "https://www.google.com/share.google?q=VZMNR0IqoZNAxc3Zb",
+      url: "https://share.google/He800ykh8pAH6yeGC",
       label: "Voir nos avis Google",
     },
   },
