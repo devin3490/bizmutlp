@@ -114,11 +114,11 @@ export const ApplicationForm = () => {
       if (error) throw error;
       setSession(prev => ({ ...prev, submitted: true }));
       
+      toast.success("Candidature envoyée avec succès !");
       if (qualified) {
-        toast.success("Candidature envoyée avec succès !");
         setTimeout(() => navigate("/merci"), 1000);
       } else {
-        toast.success("Candidature envoyée avec succès !");
+        setTimeout(() => navigate("/merci-candidature"), 1000);
       }
     } catch (err) {
       console.error("Sheet submission error:", err);
