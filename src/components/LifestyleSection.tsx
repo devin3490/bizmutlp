@@ -81,6 +81,12 @@ const lifestyleData = [
     imageAlt: "Voyage Bizmut été 2025 en République Dominicaine",
   },
   {
+    badge: "Bizmut Games",
+    headline: "Des compétitions tout l'été pour gagner gros",
+    description: "Les Bizmut Games, c'est bien plus que des ventes. Tout au long de l'été, on organise des défis et des compétitions où tu peux gagner des prix incroyables — laptops, PS5 et plus encore. Parce qu'on est des gens qui aiment avoir du fun dans la vie.",
+    image: lifestyleGames,
+    imageAlt: "Bizmut Games — prix à gagner tout l'été",
+  {
     badge: "Accès privilégié",
     headline: "Vis la vie au plus haut niveau",
     description: "Jets privés, retraites de luxe et accès VIP à des événements partout dans le monde. Ce n'est pas un rêve — c'est le standard Bizmut.",
