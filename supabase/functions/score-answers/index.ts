@@ -213,7 +213,7 @@ serve(async (req) => {
         const answer = answers[qId];
         if (!answer?.label) return;
         const result = await scoreOpenQuestion(
-          LOVABLE_API_KEY,
+          OPENAI_API_KEY,
           qId,
           questionTexts[qId] ?? "",
           answer.label,
