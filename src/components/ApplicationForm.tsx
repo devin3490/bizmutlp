@@ -227,6 +227,7 @@ export const ApplicationForm = () => {
               value={textValue}
               onChange={(e) => { setTextValue(e.target.value); setValidationError(""); }}
               placeholder={(q as any).placeholder || "Ta réponse..."}
+              inputMode={isNumericQuestion ? "numeric" : undefined}
               className="bg-secondary/30 border-border text-foreground placeholder:text-muted-foreground h-12 text-base"
               onKeyDown={(e) => e.key === "Enter" && handleTextSubmit()}
               autoFocus
