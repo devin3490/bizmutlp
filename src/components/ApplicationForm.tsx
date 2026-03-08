@@ -44,8 +44,7 @@ export const ApplicationForm = () => {
   const [showOther, setShowOther] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const { answers, currentQuestion, totalScore, completed } = session;
+  const { answers, currentQuestion, totalScore, completed, submitted } = session;
 
   const totalQuestions = quizQuestions.length;
   const progress = (Object.keys(answers).length / totalQuestions) * 100;
