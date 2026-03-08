@@ -15,13 +15,13 @@ export const FloatingChat = () => {
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             className="glass rounded-lg p-6 mb-4 w-80"
           >
-            <h4 className="text-foreground font-bold text-lg mb-2">Chat with us</h4>
+            <h4 className="text-foreground font-bold text-lg mb-2">Discute avec nous</h4>
             <p className="text-muted-foreground text-sm mb-4">
-              Have questions about joining Bismuth? We're here to help.
+              Des questions sur Bismuth ? On est là pour t'aider.
             </p>
             <input
               type="text"
-              placeholder="Type your message..."
+              placeholder="Écris ton message..."
               className="w-full bg-muted border border-glass rounded px-4 py-3 text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:border-bismuth-purple"
             />
           </motion.div>

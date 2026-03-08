@@ -13,10 +13,10 @@ export const ApplicationForm = () => (
         className="text-center mb-12"
       >
         <h2 className="text-4xl md:text-5xl font-black text-gold mb-4">
-          Apply to Join the Bismuth Team
+          Postule pour rejoindre l'équipe Bismuth
         </h2>
         <p className="text-foreground/80 text-lg max-w-2xl mx-auto">
-          Complete the short application below to see if you qualify.
+          Remplis le court formulaire ci-dessous pour voir si tu es éligible.
         </p>
       </motion.div>
 

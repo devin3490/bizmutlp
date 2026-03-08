@@ -43,46 +43,46 @@ const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed
 
 const lifestyleData = [
   {
-    badge: "Elite Network",
-    headline: "Connect With the Top 1%",
-    description: "Surround yourself with high-performers, industry leaders, and visionaries. Our exclusive network opens doors that most people never even see.",
+    badge: "Réseau d'élite",
+    headline: "Connecte-toi avec le Top 1%",
+    description: "Entoure-toi de performeurs, leaders d'industrie et visionnaires. Notre réseau exclusif ouvre des portes que la plupart des gens ne voient même jamais.",
     image: lifestyleNetworking,
-    imageAlt: "VIP networking event",
+    imageAlt: "Événement de networking VIP",
   },
   {
-    badge: "High Income",
-    headline: "Unlock Unlimited Earning Potential",
-    description: "Our proven system empowers ambitious individuals to build multiple streams of income and achieve financial freedom on their own terms.",
+    badge: "Revenus élevés",
+    headline: "Débloquer un potentiel de gains illimité",
+    description: "Notre système éprouvé permet aux individus ambitieux de bâtir plusieurs sources de revenus et d'atteindre la liberté financière à leurs propres conditions.",
     image: lifestyleCar,
-    imageAlt: "Luxury sports car",
+    imageAlt: "Voiture de sport de luxe",
   },
   {
-    badge: "Global Travel",
-    headline: "Work From Anywhere in the World",
-    description: "From tropical resorts to world-class cities — build a career that lets you live life without borders. Your office is wherever you choose.",
+    badge: "Voyages internationaux",
+    headline: "Travaille de n'importe où dans le monde",
+    description: "Des stations balnéaires tropicales aux grandes métropoles — construis une carrière qui te permet de vivre sans frontières. Ton bureau est là où tu le choisis.",
     image: lifestyleResort,
-    imageAlt: "Tropical resort",
+    imageAlt: "Station balnéaire tropicale",
   },
   {
-    badge: "Private Access",
-    headline: "Experience Life at the Highest Level",
-    description: "Private jets, luxury retreats, and VIP access to events around the world. This isn't a dream — it's the Bismuth standard.",
+    badge: "Accès privilégié",
+    headline: "Vis la vie au plus haut niveau",
+    description: "Jets privés, retraites de luxe et accès VIP à des événements partout dans le monde. Ce n'est pas un rêve — c'est le standard Bismuth.",
     image: lifestyleJet,
-    imageAlt: "Private jet interior",
+    imageAlt: "Intérieur de jet privé",
   },
   {
-    badge: "Premium Living",
-    headline: "Design Your Dream Lifestyle",
-    description: "From penthouse apartments to dream homes — build the life that matches your ambition. You deserve more than ordinary.",
+    badge: "Mode de vie premium",
+    headline: "Crée le style de vie de tes rêves",
+    description: "Des penthouses aux maisons de rêve — construis la vie qui correspond à ton ambition. Tu mérites plus que l'ordinaire.",
     image: lifestyleApartment,
-    imageAlt: "Luxury penthouse apartment",
+    imageAlt: "Appartement penthouse de luxe",
   },
   {
-    badge: "World-Class Training",
-    headline: "Develop Into Your Best Self",
-    description: "Access elite mentorship, cutting-edge training programs, and a culture that pushes you to grow faster than you ever thought possible.",
+    badge: "Formation d'élite",
+    headline: "Deviens la meilleure version de toi-même",
+    description: "Accède à un mentorat d'élite, des programmes de formation de pointe et une culture qui te pousse à grandir plus vite que tu ne l'aurais jamais cru possible.",
     image: lifestyleMeeting,
-    imageAlt: "Elite team meeting",
+    imageAlt: "Réunion d'équipe élite",
   },
 ];
 
@@ -95,9 +95,9 @@ export const LifestyleSection = () => (
         viewport={{ once: true }}
         className="text-center mb-8"
       >
-        <span className="text-bismuth-teal text-sm uppercase tracking-widest font-semibold">Why Bismuth</span>
+        <span className="text-bismuth-teal text-sm uppercase tracking-widest font-semibold">Pourquoi Bismuth</span>
         <h2 className="text-4xl md:text-5xl font-black text-gold mt-4">
-          The Bismuth Advantage
+          L'avantage Bismuth
         </h2>
       </motion.div>
 

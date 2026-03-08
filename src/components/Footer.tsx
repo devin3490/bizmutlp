@@ -8,7 +8,7 @@ export const Footer = () => (
         <span className="text-foreground font-semibold tracking-wider uppercase">Bismuth</span>
       </div>
       <p className="text-muted-foreground text-sm">
-        © {new Date().getFullYear()} Bismuth. All rights reserved.
+        © {new Date().getFullYear()} Bismuth. Tous droits réservés.
       </p>
     </div>
   </footer>

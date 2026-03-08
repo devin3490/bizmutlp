@@ -42,7 +42,7 @@ export const Navbar = () => {
             onClick={() => scrollTo("#application")}
             className="bg-bismuth-purple text-foreground px-5 py-2 text-sm font-semibold tracking-wide hover:bg-bismuth-pink transition-colors"
           >
-            Apply Now
+            Postuler
           </button>
         </div>
 
@@ -75,7 +75,7 @@ export const Navbar = () => {
                 onClick={() => scrollTo("#application")}
                 className="bg-bismuth-purple text-foreground px-5 py-3 text-sm font-semibold tracking-wide hover:bg-bismuth-pink transition-colors mt-2"
               >
-                Apply Now
+                Postuler
               </button>
             </div>
           </motion.div>
