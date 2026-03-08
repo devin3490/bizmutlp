@@ -140,6 +140,8 @@ async function appendToSheet(accessToken: string, values: string[]) {
   });
 
   const data = await res.json();
+  console.log("Sheets API response status:", res.status);
+  console.log("Sheets API response body:", JSON.stringify(data));
   if (!res.ok) {
     throw new Error(`Google Sheets API error [${res.status}]: ${JSON.stringify(data)}`);
   }
