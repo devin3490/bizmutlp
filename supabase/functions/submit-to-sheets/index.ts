@@ -183,13 +183,25 @@ serve(async (req) => {
 
     const { answers, totalScore, qualified } = await req.json();
 
+    // Questions with scores (choice questions): 7, 8, 10, 12, 14
+    const scoredQuestions = new Set([7, 8, 10, 12, 14]);
+
     const timestamp = new Date().toISOString();
-    const row = [
-      timestamp,
-      ...Object.values(answers as Record<string, { label: string }>).map((a) => a.label),
-      String(totalScore),
-      qualified ? "Qualifié" : "Non qualifié",
-    ];
+    const row: string[] = [timestamp];
+
+    // Build row in strict question order (1-16)
+    // For scored questions: answer + score in next column
+    for (let id = 1; id <= 16; id++) {
+      const answer = (answers as Record<string, { label: string; score: number }>)[String(id)];
+      row.push(answer?.label ?? "");
+      if (scoredQuestions.has(id)) {
+        row.push(answer ? String(answer.score) : "");
+      }
+    }
+
+    // Total score + qualification status
+    row.push(String(totalScore));
+    row.push(qualified ? "Qualifié" : "Non qualifié");
 
     const accessToken = await getAccessToken(creds);
     console.log("Access token obtained, calling Sheets API...");
