@@ -23,8 +23,8 @@ export const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-glass">
       <div className="container mx-auto px-6 flex items-center justify-between h-16">
         <button onClick={() => scrollTo("#hero")} className="flex items-center gap-3">
-          <img src={bismuthLogo} alt="Bismuth" className="h-8 w-auto" />
-          <span className="text-foreground font-semibold text-lg tracking-wider uppercase">Bismuth</span>
+          <img src={bismuthLogo} alt="Bizmut" className="h-8 w-auto" />
+          <span className="text-foreground font-semibold text-lg tracking-wider uppercase">Bizmut</span>
         </button>
 
         {/* Desktop */}

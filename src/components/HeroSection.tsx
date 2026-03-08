@@ -28,9 +28,9 @@ export const HeroSection = () => {
               transition={{ delay: 0.2 }}
               className="flex items-center justify-center gap-3 mb-8"
             >
-              <img src={bismuthLogo} alt="Bismuth logo" className="h-10 w-auto" />
+              <img src={bismuthLogo} alt="Bizmut logo" className="h-10 w-auto" />
               <span className="text-foreground font-semibold text-xl tracking-wider uppercase">
-Bismuth
+Bizmut
               </span>
             </motion.div>
 
