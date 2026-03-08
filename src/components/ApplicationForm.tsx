@@ -160,6 +160,7 @@ export const ApplicationForm = () => {
   );
 
   const isEmailQuestion = question?.type === "text" && question.placeholder?.includes("@");
+  const isNumericQuestion = question?.id === 3 || question?.id === 4; // Âge ou Numéro de téléphone
 
   const validateTextInput = useCallback((val: string): string | null => {
     if (!val.trim()) return null;
@@ -167,13 +168,20 @@ export const ApplicationForm = () => {
       if (!val.includes("@")) return "Veuillez entrer une adresse courriel valide (avec @).";
       return null;
     }
-    // For textarea and non-email text: 7 words minimum
+    if (isNumericQuestion) {
+      const digitsOnly = val.replace(/[\s\-\(\)\+]/g, "");
+      if (!/^\d+$/.test(digitsOnly)) return "Ce champ n'accepte que des chiffres.";
+      if (question?.id === 3 && (parseInt(digitsOnly) < 1 || parseInt(digitsOnly) > 120)) {
+        return "Veuillez entrer un âge valide (1-120).";
+      }
+      return null;
+    }
     if (question?.type === "textarea") {
       const wordCount = val.trim().split(/\s+/).filter(Boolean).length;
       if (wordCount < 7) return `Minimum 7 mots requis (${wordCount}/7).`;
     }
     return null;
-  }, [question, isEmailQuestion]);
+  }, [question, isEmailQuestion, isNumericQuestion]);
 
   const handleTextSubmit = useCallback(() => {
     const val = textValue.trim();
@@ -219,6 +227,7 @@ export const ApplicationForm = () => {
               value={textValue}
               onChange={(e) => { setTextValue(e.target.value); setValidationError(""); }}
               placeholder={(q as any).placeholder || "Ta réponse..."}
+              inputMode={isNumericQuestion ? "numeric" : undefined}
               className="bg-secondary/30 border-border text-foreground placeholder:text-muted-foreground h-12 text-base"
               onKeyDown={(e) => e.key === "Enter" && handleTextSubmit()}
               autoFocus
