@@ -6,6 +6,7 @@ import lifestyleNetworking from "@/assets/lifestyle-networking.jpg";
 import lifestyleJet from "@/assets/lifestyle-jet.jpg";
 import lifestyleApartment from "@/assets/lifestyle-apartment.jpg";
 import lifestyleMeeting from "@/assets/lifestyle-meeting.jpg";
+import lifestyleGames from "@/assets/lifestyle-games.png";
 import lifestyleHousing from "@/assets/lifestyle-housing.png";
 import lifestyleTrip from "@/assets/lifestyle-trip.png";
 
