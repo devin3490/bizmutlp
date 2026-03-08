@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
+import { encode as base64Encode, decode as base64Decode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -81,19 +81,24 @@ async function getAccessToken(creds: ServiceAccountCredentials): Promise<string>
 
   const unsignedJwt = `${strToBase64Url(header)}.${strToBase64Url(claim)}`;
 
-  // Parse PEM private key - handle both literal \n and actual newlines
-  const privateKey = creds.private_key.replace(/\\n/g, "\n");
+  // Parse PEM private key - handle various escape formats
+  let privateKey = creds.private_key;
+  // Replace literal \n sequences with actual newlines
+  privateKey = privateKey.replace(/\\n/g, "\n");
+  // Also handle double-escaped \\n
+  privateKey = privateKey.replace(/\\\\n/g, "\n");
+  
   const pemBody = privateKey
     .replace(/-----BEGIN PRIVATE KEY-----/g, "")
     .replace(/-----END PRIVATE KEY-----/g, "")
-    .replace(/[\r\n\s]/g, "");
+    .replace(/[\r\n\s]/g, "")
+    // Remove any non-base64 characters
+    .replace(/[^A-Za-z0-9+/=]/g, "");
 
-  // Decode base64 PEM to binary using atob
-  const binaryStr = atob(pemBody);
-  const binaryKey = new Uint8Array(binaryStr.length);
-  for (let i = 0; i < binaryStr.length; i++) {
-    binaryKey[i] = binaryStr.charCodeAt(i);
-  }
+  console.log("PEM body length:", pemBody.length);
+
+  // Use Deno std base64 decode instead of atob
+  const binaryKey = base64Decode(pemBody);
 
   const cryptoKey = await crypto.subtle.importKey(
     "pkcs8",
