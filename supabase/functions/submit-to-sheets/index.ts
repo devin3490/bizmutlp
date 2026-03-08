@@ -133,7 +133,7 @@ async function getAccessToken(creds: ServiceAccountCredentials): Promise<string>
 }
 
 async function appendToSheet(accessToken: string, values: string[]) {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!A:Z:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Feuille%201!A:Z:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
 
   const res = await fetch(url, {
     method: "POST",
