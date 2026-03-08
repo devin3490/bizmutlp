@@ -311,11 +311,12 @@ export const ApplicationForm = () => {
                   >
                     <Textarea
                       value={otherValue}
-                      onChange={(e) => setOtherValue(e.target.value)}
+                      onChange={(e) => { setOtherValue(e.target.value); setValidationError(""); }}
                       placeholder="Explique ce qui te fait performer au maximum..."
                       className="bg-secondary/30 border-border text-foreground placeholder:text-muted-foreground min-h-[80px] text-sm resize-none"
                       autoFocus
                     />
+                    {validationError && <p className="text-sm text-destructive">{validationError}</p>}
                     <Button
                       onClick={handleOtherSubmit}
                       disabled={!otherValue.trim()}
