@@ -9,6 +9,7 @@ import lifestyleMeeting from "@/assets/lifestyle-meeting.jpg";
 import lifestyleGames from "@/assets/lifestyle-games.png";
 import lifestyleHousing from "@/assets/lifestyle-housing.png";
 import lifestyleTrip from "@/assets/lifestyle-trip.png";
+import lifestyleGoogleReviews from "@/assets/lifestyle-google-reviews.png";
 
 interface LifestyleItemProps {
   badge: string;
@@ -18,9 +19,10 @@ interface LifestyleItemProps {
   imageAlt: string;
   reversed?: boolean;
   index: number;
+  link?: { url: string; label: string };
 }
 
-const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index }: LifestyleItemProps) => (
+const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index, link }: LifestyleItemProps) => (
   <motion.div
     initial={{ opacity: 0, y: 60 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -40,6 +42,16 @@ const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed
       </span>
       <h3 className="text-3xl md:text-4xl font-bold text-gold leading-tight">{headline}</h3>
       <p className="text-foreground/80 text-lg leading-relaxed">{description}</p>
+      {link && (
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-bismuth-gold hover:text-bismuth-teal transition-colors font-semibold text-lg underline underline-offset-4"
+        >
+          {link.label} →
+        </a>
+      )}
     </div>
   </motion.div>
 );
@@ -51,6 +63,17 @@ const lifestyleData = [
     description: "Concentre-toi sur ta performance sans te soucier du loyer. Bizmut prend en charge ton logement dans nos villes d'opération : Québec et Sherbrooke. Un avantage concret pour te permettre de performer à 100%.",
     image: lifestyleHousing,
     imageAlt: "Logement moderne payé par Bizmut",
+  },
+  {
+    badge: "La référence au Québec",
+    headline: "La plus grosse compagnie de lavage de vitres à Québec et en Estrie",
+    description: "Avec une note de 4.8/5 sur Google, Bizmut s'est imposé comme le leader incontesté du lavage de vitres à Québec et en Estrie. Rejoins une équipe qui a fait ses preuves et qui est reconnue par ses clients.",
+    image: lifestyleGoogleReviews,
+    imageAlt: "4.8 sur 5 étoiles sur Google Reviews",
+    link: {
+      url: "https://www.google.com/search?q=osplash&oq=osplash&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQRRg7MgYIAhBFGD0yBggDEEUYPTIGCAQQLhhA0gEIMzgwM2owajGoAgCwAgA&sourceid=chrome&ie=UTF-8#lrd=0x42a8a0cc6c44b0d7:0xc086ecf4cbf1ec75,1,,,,",
+      label: "Voir nos avis Google",
+    },
   },
   {
     badge: "Réseau d'élite",
