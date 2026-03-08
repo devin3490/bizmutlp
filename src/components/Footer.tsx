@@ -1,3 +1,5 @@
+import bismuthLogo from "@/assets/bismuth-logo.png";
+
 export const Footer = () => (
   <footer className="py-12 border-t border-border">
     <div className="container mx-auto px-6 text-center">

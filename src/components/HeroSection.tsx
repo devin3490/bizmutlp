@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { BismuthGeometry } from "./BismuthGeometry";
+import bismuthLogo from "@/assets/bismuth-logo.png";
 
 export const HeroSection = () => {
   const scrollToForm = () => {
