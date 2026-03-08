@@ -136,7 +136,7 @@ export const ApplicationForm = () => {
 
   const handleReset = () => {
     localStorage.removeItem(SESSION_KEY);
-    setSession({ answers: {}, currentQuestion: 0, totalScore: 0, completed: false, timestamps: {} });
+    setSession({ answers: {}, currentQuestion: 0, totalScore: 0, completed: false, submitted: false, timestamps: {} });
     setShowPanel(false);
     setTextValue("");
     setOtherValue("");
