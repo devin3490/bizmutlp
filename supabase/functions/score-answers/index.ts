@@ -31,14 +31,14 @@ interface AnswerData {
 }
 
 async function callAI(apiKey: string, prompt: string): Promise<string> {
-  const res = await fetch(AI_GATEWAY, {
+  const res = await fetch(OPENAI_API_URL, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "google/gemini-2.5-flash",
+      model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
     }),
   });
