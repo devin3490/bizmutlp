@@ -65,6 +65,17 @@ const lifestyleData = [
     imageAlt: "Logement moderne payé par Bizmut",
   },
   {
+    badge: "La référence au Québec",
+    headline: "La plus grosse compagnie de lavage de vitres à Québec et en Estrie",
+    description: "Avec une note de 4.8/5 sur Google, Bizmut s'est imposé comme le leader incontesté du lavage de vitres à Québec et en Estrie. Rejoins une équipe qui a fait ses preuves et qui est reconnue par ses clients.",
+    image: lifestyleGoogleReviews,
+    imageAlt: "4.8 sur 5 étoiles sur Google Reviews",
+    link: {
+      url: "https://www.google.com/search?q=osplash&oq=osplash&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQRRg7MgYIAhBFGD0yBggDEEUYPTIGCAQQLhhA0gEIMzgwM2owajGoAgCwAgA&sourceid=chrome&ie=UTF-8#lrd=0x42a8a0cc6c44b0d7:0xc086ecf4cbf1ec75,1,,,,",
+      label: "Voir nos avis Google",
+    },
+  },
+  {
     badge: "Réseau d'élite",
     headline: "Connecte-toi avec le Top 1%",
     description: "Entoure-toi de performeurs, leaders d'industrie et visionnaires. Notre réseau exclusif ouvre des portes que la plupart des gens ne voient même jamais.",
