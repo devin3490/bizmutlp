@@ -11,9 +11,9 @@ const Index = () => {
     <div className="min-h-screen bg-background overflow-x-hidden">
       <HeroSection />
       <BismuthSeparator />
-      <LifestyleSection />
-      <BismuthSeparator />
       <ApplicationForm />
+      <BismuthSeparator />
+      <LifestyleSection />
       <Footer />
       <FloatingChat />
       <ExitIntentPopup />
