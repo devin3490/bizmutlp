@@ -451,6 +451,11 @@ export const ApplicationForm = () => {
                           ? "Ton profil correspond à nos critères d'excellence. Tu es pré-qualifié(e) pour rejoindre Bizmut."
                           : "Nous avons bien reçu tes réponses. Notre équipe analysera ton profil et te contactera si une opportunité se présente."}
                       </p>
+                      {submitting && (
+                        <p className="text-sm text-muted-foreground mb-2 flex items-center justify-center gap-2">
+                          <Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours...
+                        </p>
+                      )}
                       <p className="text-base md:text-lg font-semibold text-foreground mb-5 md:mb-6">
                         Score final : <span className="text-bismuth-teal">{totalScore}</span> / {quizQuestions.filter((q) => q.type === "choice").length * 5}
                       </p>
