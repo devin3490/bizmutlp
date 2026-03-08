@@ -467,12 +467,10 @@ export const ApplicationForm = () => {
                       </motion.div>
 
                       <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 md:mb-3">
-                        {qualified ? "Félicitations ! 🎉" : "Merci pour ta candidature"}
+                        Merci pour ta candidature ! 🎉
                       </h3>
                       <p className="text-sm md:text-base text-muted-foreground mb-2 max-w-md mx-auto px-2">
-                        {qualified
-                          ? "Ton profil correspond à nos critères d'excellence. Tu es pré-qualifié(e) pour rejoindre Bizmut."
-                          : "Nous avons bien reçu tes réponses. Notre équipe analysera ton profil et te contactera si une opportunité se présente."}
+                        Nous avons bien reçu tes réponses. Notre équipe analysera ton profil et te contactera sous peu.
                       </p>
                       {submitting && (
                         <p className="text-sm text-muted-foreground mb-2 flex items-center justify-center gap-2">
