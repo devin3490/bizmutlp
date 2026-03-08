@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { ArrowDown } from "lucide-react";
 import { BismuthGeometry } from "./BismuthGeometry";
 import bismuthLogo from "@/assets/bismuth-logo.png";
 
@@ -58,6 +59,23 @@ Bizmut
               <br />
               <span className="text-bismuth-teal italic">porte-à-porte.</span>
             </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className="flex flex-col items-center gap-3 mt-4"
+            >
+              <p className="text-muted-foreground text-lg md:text-xl font-medium">
+                Remplis le formulaire ci-dessous pour appliquer
+              </p>
+              <motion.div
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <ArrowDown className="text-bismuth-gold" size={32} />
+              </motion.div>
+            </motion.div>
 
           </motion.div>
         </div>
