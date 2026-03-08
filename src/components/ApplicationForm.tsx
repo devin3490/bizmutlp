@@ -15,7 +15,7 @@ export const ApplicationForm = () => (
         <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLSdtZLDpUzEACUnDTU_inRHR-gH6PXH3e1m9jsaGCaGR0zQuLQ/viewform?embedded=true"
           width="100%"
-          height="1200"
+          height="3200"
           className="border-0 w-full"
           title="Bizmut Application Form"
         >
