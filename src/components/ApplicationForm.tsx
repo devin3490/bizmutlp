@@ -9,12 +9,12 @@ export const ApplicationForm = () => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
-        className="glass rounded-lg max-w-3xl mx-auto overflow-hidden"
+        className="glass rounded-lg max-w-5xl mx-auto overflow-hidden"
       >
         <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLSdtZLDpUzEACUnDTU_inRHR-gH6PXH3e1m9jsaGCaGR0zQuLQ/viewform?embedded=true"
           width="100%"
-          height="800"
+          height="1200"
           className="border-0 w-full"
           title="Bizmut Application Form"
         >
