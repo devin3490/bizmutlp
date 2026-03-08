@@ -82,8 +82,8 @@ const lifestyleData = [
   },
   {
     badge: "Bizmut Games",
-    headline: "Des compétitions tout l'été pour gagner gros",
-    description: "Les Bizmut Games, c'est bien plus que des ventes. Tout au long de l'été, on organise des défis et des compétitions où tu peux gagner des prix incroyables — laptops, PS5 et plus encore. Parce qu'on est des gens qui aiment avoir du fun dans la vie.",
+    headline: "Work hard. Play harder.",
+    description: "Bienvenue aux Bizmut Games. Chez Bizmut, on prend la cohésion au sérieux. Les Bizmut Games sont une série de défis et de compétitions amicales qui rassemblent l'équipe autour du jeu, du dépassement et de la collaboration.",
     image: lifestyleGames,
     imageAlt: "Bizmut Games — prix à gagner tout l'été",
   },
