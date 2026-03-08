@@ -23,11 +23,13 @@ async function getAccessToken(
     iat: now,
   };
 
+  const toBase64Url = (data: Uint8Array | string) => {
+    const str = typeof data === "string" ? data : base64Encode(data);
+    return str.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  };
+
   const encode = (obj: unknown) =>
-    btoa(JSON.stringify(obj))
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=+$/, "");
+    toBase64Url(btoa(JSON.stringify(obj)));
 
   const unsignedJwt = `${encode(header)}.${encode(claim)}`;
 
@@ -35,9 +37,9 @@ async function getAccessToken(
   const pemContents = privateKey
     .replace(/-----BEGIN PRIVATE KEY-----/, "")
     .replace(/-----END PRIVATE KEY-----/, "")
-    .replace(/\n/g, "");
+    .replace(/\s/g, "");
 
-  const binaryKey = Uint8Array.from(atob(pemContents), (c) => c.charCodeAt(0));
+  const binaryKey = base64Decode(pemContents);
 
   const cryptoKey = await crypto.subtle.importKey(
     "pkcs8",
