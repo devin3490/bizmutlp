@@ -263,7 +263,7 @@ serve(async (req) => {
     };
 
     // Coherence scoring
-    const coherence = await scoreCoherence(LOVABLE_API_KEY, candidateInfo, answers, aiScores);
+    const coherence = await scoreCoherence(OPENAI_API_KEY, candidateInfo, answers, aiScores);
     const totalScoreAdjusted = Math.round(Math.min(100, totalScoreRaw * coherence.coherence_coef) * 100) / 100;
 
     // Determine status
