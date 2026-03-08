@@ -55,12 +55,7 @@ async function getAccessToken(
     new TextEncoder().encode(unsignedJwt)
   );
 
-  const signedJwt = `${unsignedJwt}.${btoa(
-    String.fromCharCode(...new Uint8Array(signature))
-  )
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "")}`;
+  const signedJwt = `${unsignedJwt}.${toBase64Url(new Uint8Array(signature))}`;
 
   // Exchange for access token
   const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
