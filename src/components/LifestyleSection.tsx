@@ -71,7 +71,7 @@ const lifestyleData = [
     image: lifestyleGoogleReviews,
     imageAlt: "4.8 sur 5 étoiles sur Google Reviews",
     link: {
-      url: "https://www.google.com/search?q=osplash&oq=osplash&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQRRg7MgYIAhBFGD0yBggDEEUYPTIGCAQQLhhA0gEIMzgwM2owajGoAgCwAgA&sourceid=chrome&ie=UTF-8#lrd=0x42a8a0cc6c44b0d7:0xc086ecf4cbf1ec75,1,,,,",
+      url: "https://www.google.com/search?sca_esv=6b4ddb55862f8c40&sxsrf=ANbL-n4fvGr3RKQtJE7NZs9wZN8_3ukKnA:1772950104276&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOZ3HIe9fbqgO8L5ZLxzOehFngh9mLPApbgqKChLFesZGf4_-S_YRAg01QRahipyeffMh1RZSo2P8ElGXe2cpCDjV7zYQ6MqmXYXkeAq54LG7ThSMww%3D%3D&q=Services+O%27Splash+inc.+Reviews&sa=X&ved=2ahUKEwihz63p0Y-TAxWZjIkEHbzOOUwQ0bkNegQIRxAH&biw=1438&bih=868&dpr=1",
       label: "Voir nos avis Google",
     },
   },
