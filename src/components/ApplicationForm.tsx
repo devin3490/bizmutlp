@@ -44,6 +44,7 @@ export const ApplicationForm = () => {
   const [textValue, setTextValue] = useState("");
   const [otherValue, setOtherValue] = useState("");
   const [showOther, setShowOther] = useState(false);
+  const [validationError, setValidationError] = useState("");
   
   const [submitting, setSubmitting] = useState(false);
   const { answers, currentQuestion, totalScore, completed, submitted } = session;
@@ -77,6 +78,7 @@ export const ApplicationForm = () => {
     setTextValue("");
     setOtherValue("");
     setShowOther(false);
+    setValidationError("");
   }, [currentQuestion]);
 
   // Submit to Google Sheets when quiz is completed
@@ -157,15 +159,43 @@ export const ApplicationForm = () => {
     [advance]
   );
 
+  const isEmailQuestion = question?.type === "text" && question.placeholder?.includes("@");
+
+  const validateTextInput = useCallback((val: string): string | null => {
+    if (!val.trim()) return null;
+    if (isEmailQuestion) {
+      if (!val.includes("@")) return "Veuillez entrer une adresse courriel valide (avec @).";
+      return null;
+    }
+    // For textarea and non-email text: 7 words minimum
+    if (question?.type === "textarea" || (question?.type === "text" && !isEmailQuestion)) {
+      const wordCount = val.trim().split(/\s+/).filter(Boolean).length;
+      if (wordCount < 7) return `Minimum 7 mots requis (${wordCount}/7).`;
+    }
+    return null;
+  }, [question, isEmailQuestion]);
+
   const handleTextSubmit = useCallback(() => {
     const val = textValue.trim();
     if (!val) return;
+    const error = validateTextInput(val);
+    if (error) {
+      setValidationError(error);
+      return;
+    }
+    setValidationError("");
     advance(val, 0);
-  }, [textValue, advance]);
+  }, [textValue, advance, validateTextInput]);
 
   const handleOtherSubmit = useCallback(() => {
     const val = otherValue.trim();
     if (!val) return;
+    const wordCount = val.split(/\s+/).filter(Boolean).length;
+    if (wordCount < 7) {
+      setValidationError(`Minimum 7 mots requis (${wordCount}/7).`);
+      return;
+    }
+    setValidationError("");
     advance(`Autre : ${val}`, 3);
   }, [otherValue, advance]);
 
@@ -187,12 +217,13 @@ export const ApplicationForm = () => {
           <div className="space-y-4">
             <Input
               value={textValue}
-              onChange={(e) => setTextValue(e.target.value)}
+              onChange={(e) => { setTextValue(e.target.value); setValidationError(""); }}
               placeholder={(q as any).placeholder || "Ta réponse..."}
               className="bg-secondary/30 border-border text-foreground placeholder:text-muted-foreground h-12 text-base"
               onKeyDown={(e) => e.key === "Enter" && handleTextSubmit()}
               autoFocus
             />
+            {validationError && <p className="text-sm text-destructive">{validationError}</p>}
             <Button
               onClick={handleTextSubmit}
               disabled={!textValue.trim()}
@@ -213,11 +244,12 @@ export const ApplicationForm = () => {
           <div className="space-y-4">
             <Textarea
               value={textValue}
-              onChange={(e) => setTextValue(e.target.value)}
+              onChange={(e) => { setTextValue(e.target.value); setValidationError(""); }}
               placeholder={(q as any).placeholder || "Ta réponse..."}
               className="bg-secondary/30 border-border text-foreground placeholder:text-muted-foreground min-h-[120px] text-base resize-none"
               autoFocus
             />
+            {validationError && <p className="text-sm text-destructive">{validationError}</p>}
             <Button
               onClick={handleTextSubmit}
               disabled={!textValue.trim()}
@@ -279,11 +311,12 @@ export const ApplicationForm = () => {
                   >
                     <Textarea
                       value={otherValue}
-                      onChange={(e) => setOtherValue(e.target.value)}
+                      onChange={(e) => { setOtherValue(e.target.value); setValidationError(""); }}
                       placeholder="Explique ce qui te fait performer au maximum..."
                       className="bg-secondary/30 border-border text-foreground placeholder:text-muted-foreground min-h-[80px] text-sm resize-none"
                       autoFocus
                     />
+                    {validationError && <p className="text-sm text-destructive">{validationError}</p>}
                     <Button
                       onClick={handleOtherSubmit}
                       disabled={!otherValue.trim()}
