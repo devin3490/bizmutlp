@@ -217,12 +217,13 @@ export const ApplicationForm = () => {
           <div className="space-y-4">
             <Input
               value={textValue}
-              onChange={(e) => setTextValue(e.target.value)}
+              onChange={(e) => { setTextValue(e.target.value); setValidationError(""); }}
               placeholder={(q as any).placeholder || "Ta réponse..."}
               className="bg-secondary/30 border-border text-foreground placeholder:text-muted-foreground h-12 text-base"
               onKeyDown={(e) => e.key === "Enter" && handleTextSubmit()}
               autoFocus
             />
+            {validationError && <p className="text-sm text-destructive">{validationError}</p>}
             <Button
               onClick={handleTextSubmit}
               disabled={!textValue.trim()}
