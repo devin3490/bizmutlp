@@ -12,17 +12,15 @@ export const ApplicationForm = () => (
         whileHover={{ boxShadow: "0 0 60px hsla(270, 60%, 55%, 0.15)" }}
         className="glass rounded-lg max-w-5xl mx-auto overflow-hidden transition-shadow duration-500"
       >
-        <div className="w-full overflow-y-auto max-h-[60vh] md:max-h-none rounded-lg">
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSdtZLDpUzEACUnDTU_inRHR-gH6PXH3e1m9jsaGCaGR0zQuLQ/viewform?embedded=true"
-            width="100%"
-            height="1200"
-            className="border-0 w-full"
-            title="Bizmut Application Form"
-          >
-            Loading…
-          </iframe>
-        </div>
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSdtZLDpUzEACUnDTU_inRHR-gH6PXH3e1m9jsaGCaGR0zQuLQ/viewform?embedded=true"
+          width="100%"
+          height="1200"
+          className="border-0 w-full"
+          title="Bizmut Application Form"
+        >
+          Loading…
+        </iframe>
       </motion.div>
     </div>
   </section>
