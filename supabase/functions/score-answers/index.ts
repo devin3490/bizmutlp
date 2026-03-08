@@ -6,7 +6,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const AI_GATEWAY = "https://ai.gateway.lovable.dev/v1/chat/completions";
+const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 
 // Max scores for open questions (textarea type)
 const OPEN_QUESTION_MAX_SCORES: Record<string, number> = {
@@ -31,14 +31,14 @@ interface AnswerData {
 }
 
 async function callAI(apiKey: string, prompt: string): Promise<string> {
-  const res = await fetch(AI_GATEWAY, {
+  const res = await fetch(OPENAI_API_URL, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "google/gemini-2.5-flash",
+      model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
     }),
   });
@@ -185,9 +185,9 @@ serve(async (req) => {
   }
 
   try {
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
+    if (!OPENAI_API_KEY) {
+      throw new Error("OPENAI_API_KEY is not configured");
     }
 
     const { answers } = await req.json() as { answers: Record<string, AnswerData> };
@@ -213,7 +213,7 @@ serve(async (req) => {
         const answer = answers[qId];
         if (!answer?.label) return;
         const result = await scoreOpenQuestion(
-          LOVABLE_API_KEY,
+          OPENAI_API_KEY,
           qId,
           questionTexts[qId] ?? "",
           answer.label,
@@ -229,7 +229,7 @@ serve(async (req) => {
         const answer = answers[qId];
         if (!answer?.label?.startsWith("Autre :")) return;
         const result = await scoreOpenQuestion(
-          LOVABLE_API_KEY,
+          OPENAI_API_KEY,
           qId,
           questionTexts[qId] ?? "",
           answer.label.replace("Autre : ", ""),
@@ -263,7 +263,7 @@ serve(async (req) => {
     };
 
     // Coherence scoring
-    const coherence = await scoreCoherence(LOVABLE_API_KEY, candidateInfo, answers, aiScores);
+    const coherence = await scoreCoherence(OPENAI_API_KEY, candidateInfo, answers, aiScores);
     const totalScoreAdjusted = Math.round(Math.min(100, totalScoreRaw * coherence.coherence_coef) * 100) / 100;
 
     // Determine status
