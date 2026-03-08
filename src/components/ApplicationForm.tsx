@@ -39,6 +39,7 @@ const saveSession = (session: QuizSession) => {
 };
 
 export const ApplicationForm = () => {
+  const navigate = useNavigate();
   const [session, setSession] = useState<QuizSession>(loadSession);
   const [textValue, setTextValue] = useState("");
   const [otherValue, setOtherValue] = useState("");
