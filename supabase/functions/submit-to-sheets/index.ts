@@ -7,7 +7,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const SHEET_ID = "1dBFzUMXbEMDSPuoyDOi6l2gGnDG-fnK1dNt4h8ei_H0";
+const SHEET_ID = "1pqeuCD4m9p-2IbAnwyWMQRvYtWgGNRi-JRfR0OaSOMc";
 
 function toBase64Url(input: Uint8Array): string {
   return base64Encode(input)
@@ -133,7 +133,7 @@ async function getAccessToken(creds: ServiceAccountCredentials): Promise<string>
 }
 
 async function appendToSheet(accessToken: string, values: string[]) {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!A:Z:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A:Z:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
 
   const res = await fetch(url, {
     method: "POST",
