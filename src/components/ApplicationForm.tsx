@@ -166,7 +166,7 @@ export const ApplicationForm = () => {
     setShowOther(false);
   };
 
-  const qualified = totalScore >= SCORE_THRESHOLD;
+  
 
   const renderQuestion = (q: QuizQuestion) => {
     switch (q.type) {
