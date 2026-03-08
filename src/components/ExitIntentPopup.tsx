@@ -51,16 +51,16 @@ export const ExitIntentPopup = () => {
             </button>
 
             <h3 className="text-3xl font-black text-gold mb-4">
-              Before You Go —
+              Avant de partir —
             </h3>
             <p className="text-foreground text-lg mb-8">
-              Want to build a life most people only dream about?
+              Tu veux construire la vie dont la plupart des gens ne font que rêver ?
             </p>
             <button
               onClick={handleApply}
               className="bg-bismuth-purple text-foreground px-8 py-4 text-lg font-semibold tracking-wide hover:bg-bismuth-pink transition-colors duration-300"
             >
-              Start Application
+              Commencer la candidature
             </button>
           </motion.div>
         </motion.div>
