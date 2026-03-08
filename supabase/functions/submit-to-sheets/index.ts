@@ -140,6 +140,8 @@ async function appendToSheet(accessToken: string, values: string[]) {
   });
 
   const data = await res.json();
+  console.log("Sheets API response status:", res.status);
+  console.log("Sheets API response body:", JSON.stringify(data));
   if (!res.ok) {
     throw new Error(`Google Sheets API error [${res.status}]: ${JSON.stringify(data)}`);
   }
@@ -152,16 +154,27 @@ serve(async (req) => {
   }
 
   try {
-    const credentialsJson = Deno.env.get("GOOGLE_CREDENTIALS_JSON");
-    if (!credentialsJson) {
-      throw new Error("GOOGLE_CREDENTIALS_JSON is not configured");
+    // Try individual secrets first, fall back to JSON
+    let creds: ServiceAccountCredentials;
+    const email = Deno.env.get("GOOGLE_SERVICE_ACCOUNT_EMAIL");
+    const privateKey = Deno.env.get("GOOGLE_PRIVATE_KEY");
+    
+    if (email && privateKey) {
+      console.log("Using individual secrets. Email:", email);
+      creds = {
+        client_email: email,
+        private_key: privateKey,
+        token_uri: "https://oauth2.googleapis.com/token",
+      };
+    } else {
+      const credentialsJson = Deno.env.get("GOOGLE_CREDENTIALS_JSON");
+      if (!credentialsJson) {
+        throw new Error("No Google credentials configured");
+      }
+      console.log("CREDENTIALS_JSON starts with:", JSON.stringify(credentialsJson.substring(0, 100)));
+      creds = parseServiceAccountCredentials(credentialsJson);
     }
-
-    // Debug: log first 100 chars to understand the format
-    console.log("CREDENTIALS_JSON starts with:", JSON.stringify(credentialsJson.substring(0, 100)));
-    console.log("CREDENTIALS_JSON length:", credentialsJson.length);
-
-    const creds = parseServiceAccountCredentials(credentialsJson);
+    console.log("Using client_email:", creds.client_email);
 
     const { answers, totalScore, qualified } = await req.json();
 
@@ -174,6 +187,7 @@ serve(async (req) => {
     ];
 
     const accessToken = await getAccessToken(creds);
+    console.log("Access token obtained, calling Sheets API...");
     await appendToSheet(accessToken, row);
 
     return new Response(JSON.stringify({ success: true }), {
