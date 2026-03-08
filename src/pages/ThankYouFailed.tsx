@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ThankYouFailed = () => {
