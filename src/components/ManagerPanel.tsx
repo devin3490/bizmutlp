@@ -12,6 +12,9 @@ interface ManagerPanelProps {
 const getStatus = (score: number, totalAnswered: number, totalQuestions: number) => {
   if (totalAnswered === 0) return { label: "En attente", color: "text-muted-foreground", bg: "bg-muted" };
 
+  const choiceQuestions = quizQuestions.filter((q) => q.type === "choice");
+  const maxChoiceScore = choiceQuestions.length * 5;
+
   if (totalAnswered === totalQuestions) {
     if (score >= SCORE_THRESHOLD) return { label: "Profil qualifié", color: "text-emerald-400", bg: "bg-emerald-400/10" };
     if (score >= SCORE_THRESHOLD * 0.7) return { label: "Potentiel intéressant", color: "text-amber-400", bg: "bg-amber-400/10" };
@@ -22,21 +25,20 @@ const getStatus = (score: number, totalAnswered: number, totalQuestions: number)
   const projectedScore = progress > 0 ? score / progress : 0;
   if (projectedScore >= SCORE_THRESHOLD) return { label: "Trajectoire qualifiée", color: "text-emerald-400", bg: "bg-emerald-400/10" };
   if (projectedScore >= SCORE_THRESHOLD * 0.7) return { label: "Potentiel intéressant", color: "text-amber-400", bg: "bg-amber-400/10" };
-  return { label: "En dessous du profil recherché", color: "text-red-400", bg: "bg-red-400/10" };
+  return { label: "En progression", color: "text-muted-foreground", bg: "bg-muted" };
 };
 
 export const ManagerPanel = ({ answers, totalScore, currentQuestion, compact = false }: ManagerPanelProps) => {
   const totalQuestions = quizQuestions.length;
   const totalAnswered = Object.keys(answers).length;
   const status = getStatus(totalScore, totalAnswered, totalQuestions);
-  const maxScore = totalQuestions * 5;
-  const scorePercentage = Math.round((totalScore / maxScore) * 100);
+  const choiceQuestions = quizQuestions.filter((q) => q.type === "choice");
+  const maxScore = choiceQuestions.length * 5;
+  const scorePercentage = maxScore > 0 ? Math.round((totalScore / maxScore) * 100) : 0;
 
-  // Compact mode for mobile inline display
   if (compact) {
     return (
       <div className="space-y-3">
-        {/* Status */}
         <div className={`flex items-center gap-2 px-3 py-2 rounded-md ${status.bg}`}>
           {totalScore >= SCORE_THRESHOLD ? (
             <CheckCircle className={`w-3.5 h-3.5 ${status.color}`} />
@@ -44,29 +46,30 @@ export const ManagerPanel = ({ answers, totalScore, currentQuestion, compact = f
             <AlertCircle className={`w-3.5 h-3.5 ${status.color}`} />
           )}
           <span className={`text-xs font-medium ${status.color}`}>{status.label}</span>
-          <span className="text-xs text-muted-foreground ml-auto">Seuil: {SCORE_THRESHOLD}</span>
+          <span className="text-xs text-muted-foreground ml-auto">Score: {totalScore}</span>
         </div>
 
-        {/* Compact answer list */}
         <div className="space-y-1.5 max-h-[200px] overflow-y-auto">
           {quizQuestions.map((q) => {
             const answer = answers[q.id];
             if (!answer) return null;
             return (
-              <div key={q.id} className="flex items-center justify-between text-xs p-2 rounded bg-muted/30 border border-border">
-                <span className="text-muted-foreground truncate flex-1 mr-2">Q{q.id}</span>
-                <span className="text-foreground truncate flex-1 mr-2">{answer.label}</span>
-                <span
-                  className={`font-bold px-1.5 py-0.5 rounded-full shrink-0 ${
-                    answer.score >= 4
-                      ? "bg-emerald-400/15 text-emerald-400"
-                      : answer.score >= 2
-                      ? "bg-amber-400/15 text-amber-400"
-                      : "bg-red-400/15 text-red-400"
-                  }`}
-                >
-                  +{answer.score}
-                </span>
+              <div key={q.id} className="flex items-center justify-between text-xs p-2 rounded bg-muted/30 border border-border gap-2">
+                <span className="text-muted-foreground shrink-0">Q{q.id}</span>
+                <span className="text-foreground truncate flex-1">{answer.label}</span>
+                {answer.score > 0 && (
+                  <span
+                    className={`font-bold px-1.5 py-0.5 rounded-full shrink-0 ${
+                      answer.score >= 4
+                        ? "bg-emerald-400/15 text-emerald-400"
+                        : answer.score >= 2
+                        ? "bg-amber-400/15 text-amber-400"
+                        : "bg-red-400/15 text-red-400"
+                    }`}
+                  >
+                    +{answer.score}
+                  </span>
+                )}
               </div>
             );
           })}
@@ -82,7 +85,6 @@ export const ManagerPanel = ({ answers, totalScore, currentQuestion, compact = f
       transition={{ duration: 0.6, delay: 0.3 }}
       className="glass rounded-lg p-5 md:p-6 h-fit sticky top-24"
     >
-      {/* Header */}
       <div className="flex items-center gap-2 mb-5 md:mb-6">
         <Award className="w-5 h-5 text-bismuth-teal" />
         <h3 className="text-base md:text-lg font-bold text-foreground">Panneau de suivi</h3>
@@ -92,7 +94,10 @@ export const ManagerPanel = ({ answers, totalScore, currentQuestion, compact = f
       <div className="mb-5 md:mb-6 p-3 md:p-4 rounded-lg bg-secondary/50 border border-border">
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs md:text-sm text-muted-foreground">Score total</span>
-          <span className="text-xl md:text-2xl font-bold text-foreground">{totalScore}<span className="text-xs md:text-sm text-muted-foreground">/{maxScore}</span></span>
+          <span className="text-xl md:text-2xl font-bold text-foreground">
+            {totalScore}
+            <span className="text-xs md:text-sm text-muted-foreground">/{maxScore}</span>
+          </span>
         </div>
         <div className="w-full h-1.5 md:h-2 rounded-full bg-muted overflow-hidden">
           <motion.div
@@ -127,7 +132,7 @@ export const ManagerPanel = ({ answers, totalScore, currentQuestion, compact = f
       {/* Progression */}
       <div className="mb-5 md:mb-6 flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
         <TrendingUp className="w-4 h-4" />
-        <span>{totalAnswered} / {totalQuestions} questions répondues</span>
+        <span>{totalAnswered} / {totalQuestions} réponses</span>
       </div>
 
       {/* Réponses détaillées */}
@@ -146,20 +151,24 @@ export const ManagerPanel = ({ answers, totalScore, currentQuestion, compact = f
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <p className="text-[10px] md:text-xs text-muted-foreground truncate">Q{q.id}. {q.question}</p>
-                    <p className="text-xs md:text-sm text-foreground mt-0.5">{answer.label}</p>
+                    <p className="text-[10px] md:text-xs text-muted-foreground truncate">
+                      Q{q.id}. {q.question}
+                    </p>
+                    <p className="text-xs md:text-sm text-foreground mt-0.5 line-clamp-2">{answer.label}</p>
                   </div>
-                  <span
-                    className={`text-[10px] md:text-xs font-bold px-1.5 md:px-2 py-0.5 md:py-1 rounded-full shrink-0 ${
-                      answer.score >= 4
-                        ? "bg-emerald-400/15 text-emerald-400"
-                        : answer.score >= 2
-                        ? "bg-amber-400/15 text-amber-400"
-                        : "bg-red-400/15 text-red-400"
-                    }`}
-                  >
-                    +{answer.score}
-                  </span>
+                  {answer.score > 0 && (
+                    <span
+                      className={`text-[10px] md:text-xs font-bold px-1.5 md:px-2 py-0.5 md:py-1 rounded-full shrink-0 ${
+                        answer.score >= 4
+                          ? "bg-emerald-400/15 text-emerald-400"
+                          : answer.score >= 2
+                          ? "bg-amber-400/15 text-amber-400"
+                          : "bg-red-400/15 text-red-400"
+                      }`}
+                    >
+                      +{answer.score}
+                    </span>
+                  )}
                 </div>
               </motion.div>
             );
