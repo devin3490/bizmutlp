@@ -308,7 +308,7 @@ export const ApplicationForm = () => {
         </motion.div>
 
         <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
-          {/* Mobile: Mini score bar */}
+          {/* Mobile: Progress bar (no score) */}
           {totalAnswered > 0 && !completed && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -319,12 +319,6 @@ export const ApplicationForm = () => {
                 <span className="text-xs text-muted-foreground">
                   {totalAnswered}/{totalQuestions} répondu{totalAnswered > 1 ? "es" : "e"}
                 </span>
-                <button
-                  onClick={() => setShowPanel(!showPanel)}
-                  className="flex items-center gap-1 text-xs text-bismuth-teal"
-                >
-                  {showPanel ? "Masquer" : "Détails"}
-                </button>
               </div>
               <div className="w-full h-1.5 rounded-full bg-muted overflow-hidden">
                 <motion.div
@@ -336,21 +330,6 @@ export const ApplicationForm = () => {
                   transition={{ duration: 0.5, ease: "easeOut" }}
                 />
               </div>
-              <AnimatePresence>
-                {showPanel && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="pt-4">
-                      <ManagerPanel answers={answers} totalScore={totalScore} currentQuestion={currentQuestion} compact />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </motion.div>
           )}
 
