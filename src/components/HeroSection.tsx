@@ -16,8 +16,7 @@ export const HeroSection = () => {
       <BismuthGeometry />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left - Content */}
+        <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -27,7 +26,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="flex items-center gap-3 mb-8"
+              className="flex items-center justify-center gap-3 mb-8"
             >
               <img src={bismuthLogo} alt="Bismuth logo" className="h-10 w-auto" />
               <span className="text-foreground font-semibold text-xl tracking-wider uppercase">
@@ -48,7 +47,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-lg md:text-xl text-foreground/90 mb-10 leading-relaxed max-w-xl"
+              className="text-lg md:text-xl text-foreground/90 mb-10 leading-relaxed max-w-2xl mx-auto"
             >
               Join an elite team of ambitious individuals unlocking high income, global travel,
               world-class networks, and unstoppable personal growth. Your next chapter starts here.
@@ -58,7 +57,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap justify-center gap-4"
             >
               <button
                 onClick={scrollToForm}
@@ -73,24 +72,6 @@ export const HeroSection = () => {
                 Learn More
               </button>
             </motion.div>
-          </motion.div>
-
-          {/* Right - Video Placeholder */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="glass rounded-lg overflow-hidden"
-          >
-            <div className="aspect-video flex items-center justify-center relative">
-              <div className="absolute inset-0 bg-muted/50" />
-              <div className="relative z-10 text-center">
-                <div className="w-20 h-20 border-2 border-silver rounded-full flex items-center justify-center mx-auto mb-4 hover:border-bismuth-pink transition-colors cursor-pointer">
-                  <div className="w-0 h-0 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent border-l-[20px] border-l-silver ml-1" />
-                </div>
-                <p className="text-silver text-sm uppercase tracking-widest">Watch Our Story</p>
-              </div>
-            </div>
           </motion.div>
         </div>
       </div>
