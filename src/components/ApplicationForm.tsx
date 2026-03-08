@@ -2,10 +2,12 @@ import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { quizQuestions, SCORE_THRESHOLD, type QuizQuestion } from "@/data/quizQuestions";
 import { ManagerPanel } from "./ManagerPanel";
-import { CheckCircle, ArrowRight, RotateCcw, Sparkles, Send } from "lucide-react";
+import { CheckCircle, ArrowRight, RotateCcw, Sparkles, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const SESSION_KEY = "bizmut_quiz_session";
 
@@ -40,6 +42,8 @@ export const ApplicationForm = () => {
   const [otherValue, setOtherValue] = useState("");
   const [showOther, setShowOther] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const { answers, currentQuestion, totalScore, completed } = session;
 
   const totalQuestions = quizQuestions.length;
@@ -66,6 +70,26 @@ export const ApplicationForm = () => {
     setShowOther(false);
   }, [currentQuestion]);
 
+  // Submit to Google Sheets when quiz is completed
+  const submitToSheets = useCallback(async (finalAnswers: Record<number, AnswerData>, finalScore: number) => {
+    if (submitted || submitting) return;
+    setSubmitting(true);
+    try {
+      const qualified = finalScore >= SCORE_THRESHOLD;
+      const { data, error } = await supabase.functions.invoke("submit-to-sheets", {
+        body: { answers: finalAnswers, totalScore: finalScore, qualified },
+      });
+      if (error) throw error;
+      setSubmitted(true);
+      toast.success("Candidature envoyée avec succès !");
+    } catch (err) {
+      console.error("Sheet submission error:", err);
+      toast.error("Erreur lors de l'envoi. Tes réponses sont sauvegardées localement.");
+    } finally {
+      setSubmitting(false);
+    }
+  }, [submitted, submitting]);
+
   const advance = useCallback(
     (label: string, score: number) => {
       if (!question) return;
@@ -81,9 +105,14 @@ export const ApplicationForm = () => {
         timestamps: { ...session.timestamps, [question.id]: new Date().toISOString() },
       };
 
-      setTimeout(() => setSession(updated), 250);
+      setTimeout(() => {
+        setSession(updated);
+        if (isLast) {
+          submitToSheets(newAnswers, newScore);
+        }
+      }, 250);
     },
-    [question, answers, totalScore, currentQuestion, totalQuestions, session.timestamps]
+    [question, answers, totalScore, currentQuestion, totalQuestions, session.timestamps, submitToSheets]
   );
 
   const handleChoiceAnswer = useCallback(
@@ -422,6 +451,11 @@ export const ApplicationForm = () => {
                           ? "Ton profil correspond à nos critères d'excellence. Tu es pré-qualifié(e) pour rejoindre Bizmut."
                           : "Nous avons bien reçu tes réponses. Notre équipe analysera ton profil et te contactera si une opportunité se présente."}
                       </p>
+                      {submitting && (
+                        <p className="text-sm text-muted-foreground mb-2 flex items-center justify-center gap-2">
+                          <Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours...
+                        </p>
+                      )}
                       <p className="text-base md:text-lg font-semibold text-foreground mb-5 md:mb-6">
                         Score final : <span className="text-bismuth-teal">{totalScore}</span> / {quizQuestions.filter((q) => q.type === "choice").length * 5}
                       </p>
