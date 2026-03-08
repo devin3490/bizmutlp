@@ -26,6 +26,60 @@ interface ServiceAccountCredentials {
   token_uri: string;
 }
 
+function parseServiceAccountCredentials(raw: string): ServiceAccountCredentials {
+  const attempts: string[] = [];
+
+  const tryParse = (input: string): ServiceAccountCredentials | null => {
+    try {
+      const parsed = JSON.parse(input) as Partial<ServiceAccountCredentials>;
+      if (parsed?.client_email && parsed?.private_key && parsed?.token_uri) {
+        return parsed as ServiceAccountCredentials;
+      }
+      attempts.push("JSON parsed but required keys are missing");
+      return null;
+    } catch (err) {
+      attempts.push(err instanceof Error ? err.message : "Unknown parse error");
+      return null;
+    }
+  };
+
+  // 1) Raw
+  const rawTrimmed = raw.trim();
+  const direct = tryParse(rawTrimmed);
+  if (direct) return direct;
+
+  // 2) Remove markdown code fences
+  const withoutFences = rawTrimmed
+    .replace(/^```json\s*/i, "")
+    .replace(/^```\s*/i, "")
+    .replace(/\s*```$/i, "")
+    .trim();
+  const fenced = tryParse(withoutFences);
+  if (fenced) return fenced;
+
+  // 3) Extract object portion only
+  const firstBrace = withoutFences.indexOf("{");
+  const lastBrace = withoutFences.lastIndexOf("}");
+  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+    const extracted = withoutFences.slice(firstBrace, lastBrace + 1);
+    const extractedParsed = tryParse(extracted);
+    if (extractedParsed) return extractedParsed;
+  }
+
+  // 4) Base64-encoded JSON fallback
+  try {
+    const decoded = atob(rawTrimmed);
+    const decodedParsed = tryParse(decoded);
+    if (decodedParsed) return decodedParsed;
+  } catch {
+    // Ignore base64 decode errors
+  }
+
+  throw new Error(
+    `GOOGLE_CREDENTIALS_JSON is invalid. Save the exact raw credentials.json content in the secret. Parse attempts: ${attempts.join(" | ")}`
+  );
+}
+
 async function getAccessToken(creds: ServiceAccountCredentials): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
   const header = JSON.stringify({ alg: "RS256", typ: "JWT" });
@@ -115,7 +169,7 @@ serve(async (req) => {
       throw new Error("GOOGLE_CREDENTIALS_JSON is not configured");
     }
 
-    const creds: ServiceAccountCredentials = JSON.parse(credentialsJson);
+    const creds = parseServiceAccountCredentials(credentialsJson);
 
     const { answers, totalScore, qualified } = await req.json();
 
