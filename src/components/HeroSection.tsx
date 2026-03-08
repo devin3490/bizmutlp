@@ -43,35 +43,6 @@ export const HeroSection = () => {
               Gagne 25 000 $ cet été grâce au porte-à-porte.
             </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-lg md:text-xl text-foreground/90 mb-10 leading-relaxed max-w-2xl mx-auto"
-            >
-              Rejoins une équipe d'élite de personnes ambitieuses. Revenu élevé, voyages internationaux,
-              réseau exclusif et développement personnel sans limites. Ton prochain chapitre commence ici.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              className="flex flex-wrap justify-center gap-4"
-            >
-              <button
-                onClick={scrollToForm}
-                className="bg-bismuth-purple text-foreground px-8 py-4 text-lg font-semibold tracking-wide hover:bg-bismuth-pink transition-colors duration-300"
-              >
-                Postuler maintenant
-              </button>
-              <button
-                onClick={scrollToLifestyle}
-                className="border border-silver text-silver px-8 py-4 text-lg font-semibold tracking-wide hover:bg-bismuth-pink hover:text-foreground hover:border-bismuth-pink transition-colors duration-300"
-              >
-                En savoir plus
-              </button>
-            </motion.div>
           </motion.div>
         </div>
       </div>
