@@ -162,6 +162,7 @@ serve(async (req) => {
     console.log("CREDENTIALS_JSON length:", credentialsJson.length);
 
     const creds = parseServiceAccountCredentials(credentialsJson);
+    console.log("Using client_email:", creds.client_email);
 
     const { answers, totalScore, qualified } = await req.json();
 
@@ -174,6 +175,7 @@ serve(async (req) => {
     ];
 
     const accessToken = await getAccessToken(creds);
+    console.log("Access token obtained, calling Sheets API...");
     await appendToSheet(accessToken, row);
 
     return new Response(JSON.stringify({ success: true }), {
