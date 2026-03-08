@@ -5,11 +5,12 @@ export const ApplicationForm = () => (
   <section id="application" className="py-0 relative">
     <div className="container mx-auto px-6 relative z-10">
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 60, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.2 }}
-        className="glass rounded-lg max-w-5xl mx-auto overflow-hidden"
+        transition={{ delay: 0.2, duration: 0.7, ease: "easeOut" }}
+        whileHover={{ boxShadow: "0 0 60px hsla(270, 60%, 55%, 0.15)" }}
+        className="glass rounded-lg max-w-5xl mx-auto overflow-hidden transition-shadow duration-500"
       >
         <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLSdtZLDpUzEACUnDTU_inRHR-gH6PXH3e1m9jsaGCaGR0zQuLQ/viewform?embedded=true"
