@@ -2,10 +2,12 @@ import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { quizQuestions, SCORE_THRESHOLD, type QuizQuestion } from "@/data/quizQuestions";
 import { ManagerPanel } from "./ManagerPanel";
-import { CheckCircle, ArrowRight, RotateCcw, Sparkles, Send } from "lucide-react";
+import { CheckCircle, ArrowRight, RotateCcw, Sparkles, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const SESSION_KEY = "bizmut_quiz_session";
 
