@@ -21,15 +21,16 @@ interface QuizSession {
   currentQuestion: number;
   totalScore: number;
   completed: boolean;
+  submitted: boolean;
   timestamps: Record<number, string>;
 }
 
 const loadSession = (): QuizSession => {
   try {
     const raw = localStorage.getItem(SESSION_KEY);
-    if (raw) return JSON.parse(raw);
+  if (raw) return JSON.parse(raw);
   } catch {}
-  return { answers: {}, currentQuestion: 0, totalScore: 0, completed: false, timestamps: {} };
+  return { answers: {}, currentQuestion: 0, totalScore: 0, completed: false, submitted: false, timestamps: {} };
 };
 
 const saveSession = (session: QuizSession) => {
@@ -43,8 +44,7 @@ export const ApplicationForm = () => {
   const [showOther, setShowOther] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const { answers, currentQuestion, totalScore, completed } = session;
+  const { answers, currentQuestion, totalScore, completed, submitted } = session;
 
   const totalQuestions = quizQuestions.length;
   const progress = (Object.keys(answers).length / totalQuestions) * 100;
@@ -64,6 +64,13 @@ export const ApplicationForm = () => {
     saveSession(session);
   }, [session]);
 
+  // Auto-retry submission on load if completed but not submitted
+  useEffect(() => {
+    if (completed && !submitted && !submitting && Object.keys(answers).length === totalQuestions) {
+      submitToSheets(answers, totalScore);
+    }
+  }, []);
+
   useEffect(() => {
     setTextValue("");
     setOtherValue("");
@@ -80,11 +87,11 @@ export const ApplicationForm = () => {
         body: { answers: finalAnswers, totalScore: finalScore, qualified },
       });
       if (error) throw error;
-      setSubmitted(true);
+      setSession(prev => ({ ...prev, submitted: true }));
       toast.success("Candidature envoyée avec succès !");
     } catch (err) {
       console.error("Sheet submission error:", err);
-      toast.error("Erreur lors de l'envoi. Tes réponses sont sauvegardées localement.");
+      toast.error("Erreur lors de l'envoi. Clique sur 'Renvoyer' pour réessayer.");
     } finally {
       setSubmitting(false);
     }
@@ -102,6 +109,7 @@ export const ApplicationForm = () => {
         currentQuestion: isLast ? currentQuestion : currentQuestion + 1,
         totalScore: newScore,
         completed: isLast,
+        submitted: false,
         timestamps: { ...session.timestamps, [question.id]: new Date().toISOString() },
       };
 
@@ -134,7 +142,7 @@ export const ApplicationForm = () => {
 
   const handleReset = () => {
     localStorage.removeItem(SESSION_KEY);
-    setSession({ answers: {}, currentQuestion: 0, totalScore: 0, completed: false, timestamps: {} });
+    setSession({ answers: {}, currentQuestion: 0, totalScore: 0, completed: false, submitted: false, timestamps: {} });
     setShowPanel(false);
     setTextValue("");
     setOtherValue("");
@@ -454,6 +462,25 @@ export const ApplicationForm = () => {
                       {submitting && (
                         <p className="text-sm text-muted-foreground mb-2 flex items-center justify-center gap-2">
                           <Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours...
+                        </p>
+                      )}
+                      {!submitted && !submitting && (
+                        <div className="mb-4">
+                          <p className="text-sm text-amber-400 mb-2">⚠️ L'envoi n'a pas encore été confirmé.</p>
+                          <Button
+                            onClick={() => submitToSheets(answers, totalScore)}
+                            className="text-sm"
+                            style={{
+                              background: `linear-gradient(135deg, hsl(var(--bismuth-teal)), hsl(var(--bismuth-purple)))`,
+                            }}
+                          >
+                            <Send className="w-4 h-4 mr-2" /> Renvoyer ma candidature
+                          </Button>
+                        </div>
+                      )}
+                      {submitted && (
+                        <p className="text-sm text-emerald-400 mb-2 flex items-center justify-center gap-2">
+                          <CheckCircle className="w-4 h-4" /> Candidature envoyée ✓
                         </p>
                       )}
                       <p className="text-base md:text-lg font-semibold text-foreground mb-5 md:mb-6">
