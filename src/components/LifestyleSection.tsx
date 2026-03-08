@@ -9,6 +9,7 @@ import lifestyleMeeting from "@/assets/lifestyle-meeting.jpg";
 import lifestyleGames from "@/assets/lifestyle-games.png";
 import lifestyleHousing from "@/assets/lifestyle-housing.png";
 import lifestyleTrip from "@/assets/lifestyle-trip.png";
+import lifestyleGoogleReviews from "@/assets/lifestyle-google-reviews.png";
 
 interface LifestyleItemProps {
   badge: string;
