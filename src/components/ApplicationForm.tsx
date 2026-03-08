@@ -70,6 +70,26 @@ export const ApplicationForm = () => {
     setShowOther(false);
   }, [currentQuestion]);
 
+  // Submit to Google Sheets when quiz is completed
+  const submitToSheets = useCallback(async (finalAnswers: Record<number, AnswerData>, finalScore: number) => {
+    if (submitted || submitting) return;
+    setSubmitting(true);
+    try {
+      const qualified = finalScore >= SCORE_THRESHOLD;
+      const { data, error } = await supabase.functions.invoke("submit-to-sheets", {
+        body: { answers: finalAnswers, totalScore: finalScore, qualified },
+      });
+      if (error) throw error;
+      setSubmitted(true);
+      toast.success("Candidature envoyée avec succès !");
+    } catch (err) {
+      console.error("Sheet submission error:", err);
+      toast.error("Erreur lors de l'envoi. Tes réponses sont sauvegardées localement.");
+    } finally {
+      setSubmitting(false);
+    }
+  }, [submitted, submitting]);
+
   const advance = useCallback(
     (label: string, score: number) => {
       if (!question) return;
