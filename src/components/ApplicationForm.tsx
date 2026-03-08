@@ -44,6 +44,7 @@ export const ApplicationForm = () => {
   const [textValue, setTextValue] = useState("");
   const [otherValue, setOtherValue] = useState("");
   const [showOther, setShowOther] = useState(false);
+  const [validationError, setValidationError] = useState("");
   
   const [submitting, setSubmitting] = useState(false);
   const { answers, currentQuestion, totalScore, completed, submitted } = session;
