@@ -169,6 +169,10 @@ serve(async (req) => {
       throw new Error("GOOGLE_CREDENTIALS_JSON is not configured");
     }
 
+    // Debug: log first 100 chars to understand the format
+    console.log("CREDENTIALS_JSON starts with:", JSON.stringify(credentialsJson.substring(0, 100)));
+    console.log("CREDENTIALS_JSON length:", credentialsJson.length);
+
     const creds = parseServiceAccountCredentials(credentialsJson);
 
     const { answers, totalScore, qualified } = await req.json();
