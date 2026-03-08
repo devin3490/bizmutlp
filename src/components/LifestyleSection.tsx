@@ -66,7 +66,7 @@ const lifestyleData = [
   {
     badge: "Accès privilégié",
     headline: "Vis la vie au plus haut niveau",
-    description: "Jets privés, retraites de luxe et accès VIP à des événements partout dans le monde. Ce n'est pas un rêve — c'est le standard Bismuth.",
+    description: "Jets privés, retraites de luxe et accès VIP à des événements partout dans le monde. Ce n'est pas un rêve — c'est le standard Bizmut.",
     image: lifestyleJet,
     imageAlt: "Intérieur de jet privé",
   },
@@ -95,9 +95,9 @@ export const LifestyleSection = () => (
         viewport={{ once: true }}
         className="text-center mb-8"
       >
-        <span className="text-bismuth-teal text-sm uppercase tracking-widest font-semibold">Pourquoi Bismuth</span>
+        <span className="text-bismuth-teal text-sm uppercase tracking-widest font-semibold">Pourquoi Bizmut</span>
         <h2 className="text-4xl md:text-5xl font-black text-gold mt-4">
-          L'avantage Bismuth
+          L'avantage Bizmut
         </h2>
       </motion.div>
 

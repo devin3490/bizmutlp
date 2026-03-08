@@ -16,7 +16,7 @@ export const ApplicationForm = () => (
           width="100%"
           height="800"
           className="border-0 w-full"
-          title="Bismuth Application Form"
+          title="Bizmut Application Form"
         >
           Loading…
         </iframe>

@@ -17,7 +17,7 @@ export const FloatingChat = () => {
           >
             <h4 className="text-foreground font-bold text-lg mb-2">Discute avec nous</h4>
             <p className="text-muted-foreground text-sm mb-4">
-              Des questions sur Bismuth ? On est là pour t'aider.
+              Des questions sur Bizmut ? On est là pour t'aider.
             </p>
             <input
               type="text"
