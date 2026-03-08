@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { quizQuestions, SCORE_THRESHOLD, type QuizQuestion } from "@/data/quizQuestions";
-import { ManagerPanel } from "./ManagerPanel";
+
 import { CheckCircle, ArrowRight, RotateCcw, Sparkles, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
