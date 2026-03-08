@@ -1,13 +1,22 @@
 import { motion } from "framer-motion";
 import { CheckCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ThankYouFailed = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => { document.body.removeChild(script); };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4 py-12">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -71,6 +80,19 @@ const ThankYouFailed = () => {
         >
           Notre équipe te contactera très bientôt pour la suite du processus.
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
+          className="w-full mb-8"
+        >
+          <div
+            className="calendly-inline-widget"
+            data-url="https://calendly.com/maths-converset57/appel-de-presentation-bizmut"
+            style={{ minWidth: "320px", height: "700px" }}
+          />
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
