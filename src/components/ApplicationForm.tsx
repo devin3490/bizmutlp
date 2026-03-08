@@ -80,11 +80,11 @@ export const ApplicationForm = () => {
         body: { answers: finalAnswers, totalScore: finalScore, qualified },
       });
       if (error) throw error;
-      setSubmitted(true);
+      setSession(prev => ({ ...prev, submitted: true }));
       toast.success("Candidature envoyée avec succès !");
     } catch (err) {
       console.error("Sheet submission error:", err);
-      toast.error("Erreur lors de l'envoi. Tes réponses sont sauvegardées localement.");
+      toast.error("Erreur lors de l'envoi. Clique sur 'Renvoyer' pour réessayer.");
     } finally {
       setSubmitting(false);
     }
