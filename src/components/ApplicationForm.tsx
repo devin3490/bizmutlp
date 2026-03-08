@@ -464,6 +464,25 @@ export const ApplicationForm = () => {
                           <Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours...
                         </p>
                       )}
+                      {!submitted && !submitting && (
+                        <div className="mb-4">
+                          <p className="text-sm text-amber-400 mb-2">⚠️ L'envoi n'a pas encore été confirmé.</p>
+                          <Button
+                            onClick={() => submitToSheets(answers, totalScore)}
+                            className="text-sm"
+                            style={{
+                              background: `linear-gradient(135deg, hsl(var(--bismuth-teal)), hsl(var(--bismuth-purple)))`,
+                            }}
+                          >
+                            <Send className="w-4 h-4 mr-2" /> Renvoyer ma candidature
+                          </Button>
+                        </div>
+                      )}
+                      {submitted && (
+                        <p className="text-sm text-emerald-400 mb-2 flex items-center justify-center gap-2">
+                          <CheckCircle className="w-4 h-4" /> Candidature envoyée ✓
+                        </p>
+                      )}
                       <p className="text-base md:text-lg font-semibold text-foreground mb-5 md:mb-6">
                         Score final : <span className="text-bismuth-teal">{totalScore}</span> / {quizQuestions.filter((q) => q.type === "choice").length * 5}
                       </p>
