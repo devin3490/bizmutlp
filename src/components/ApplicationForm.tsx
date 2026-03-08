@@ -101,13 +101,23 @@ export const ApplicationForm = () => {
       }
 
       // Step 2: Submit to Google Sheets with AI data
-      const qualified = aiData ? aiData.qualified : finalScore >= SCORE_THRESHOLD;
+      const maxPossible = aiData?.max_possible ?? 80;
+      const finalAdjustedScore = aiData?.total_score_adjusted ?? finalScore;
+      const qualifiedPercent = (finalAdjustedScore / maxPossible) * 100;
+      const qualified = qualifiedPercent >= 65;
+      
       const { data, error } = await supabase.functions.invoke("submit-to-sheets", {
         body: { answers: finalAnswers, totalScore: finalScore, qualified, aiData },
       });
       if (error) throw error;
       setSession(prev => ({ ...prev, submitted: true }));
-      toast.success("Candidature envoyée avec succès !");
+      
+      if (qualified) {
+        toast.success("Candidature envoyée avec succès !");
+        setTimeout(() => navigate("/merci"), 1000);
+      } else {
+        toast.success("Candidature envoyée avec succès !");
+      }
     } catch (err) {
       console.error("Sheet submission error:", err);
       toast.error("Erreur lors de l'envoi. Clique sur 'Renvoyer' pour réessayer.");
