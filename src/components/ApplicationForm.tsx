@@ -307,7 +307,7 @@ export const ApplicationForm = () => {
           </p>
         </motion.div>
 
-        <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+        <div className="flex flex-col gap-6 lg:gap-8 max-w-3xl mx-auto">
           {/* Mobile: Progress bar (no score) */}
           {totalAnswered > 0 && !completed && (
             <motion.div
