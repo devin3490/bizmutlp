@@ -27,56 +27,44 @@ interface ServiceAccountCredentials {
 }
 
 function parseServiceAccountCredentials(raw: string): ServiceAccountCredentials {
-  const attempts: string[] = [];
-
-  const tryParse = (input: string): ServiceAccountCredentials | null => {
-    try {
-      const parsed = JSON.parse(input) as Partial<ServiceAccountCredentials>;
-      if (parsed?.client_email && parsed?.private_key && parsed?.token_uri) {
-        return parsed as ServiceAccountCredentials;
-      }
-      attempts.push("JSON parsed but required keys are missing");
-      return null;
-    } catch (err) {
-      attempts.push(err instanceof Error ? err.message : "Unknown parse error");
-      return null;
+  // Try standard JSON parse first
+  try {
+    const parsed = JSON.parse(raw);
+    if (parsed?.client_email && parsed?.private_key) {
+      return { client_email: parsed.client_email, private_key: parsed.private_key, token_uri: parsed.token_uri || "https://oauth2.googleapis.com/token" };
     }
-  };
-
-  // 1) Raw
-  const rawTrimmed = raw.trim();
-  const direct = tryParse(rawTrimmed);
-  if (direct) return direct;
-
-  // 2) Remove markdown code fences
-  const withoutFences = rawTrimmed
-    .replace(/^```json\s*/i, "")
-    .replace(/^```\s*/i, "")
-    .replace(/\s*```$/i, "")
-    .trim();
-  const fenced = tryParse(withoutFences);
-  if (fenced) return fenced;
-
-  // 3) Extract object portion only
-  const firstBrace = withoutFences.indexOf("{");
-  const lastBrace = withoutFences.lastIndexOf("}");
-  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-    const extracted = withoutFences.slice(firstBrace, lastBrace + 1);
-    const extractedParsed = tryParse(extracted);
-    if (extractedParsed) return extractedParsed;
+  } catch {
+    // Fall through to regex extraction
   }
 
-  // 4) Base64-encoded JSON fallback
+  // Try wrapping with braces
   try {
-    const decoded = atob(rawTrimmed);
-    const decodedParsed = tryParse(decoded);
-    if (decodedParsed) return decodedParsed;
+    const parsed = JSON.parse(`{${raw.trim()}}`);
+    if (parsed?.client_email && parsed?.private_key) {
+      return { client_email: parsed.client_email, private_key: parsed.private_key, token_uri: parsed.token_uri || "https://oauth2.googleapis.com/token" };
+    }
   } catch {
-    // Ignore base64 decode errors
+    // Fall through to regex extraction
+  }
+
+  // Regex extraction fallback — works even with broken JSON formatting
+  const emailMatch = raw.match(/"client_email"\s*:\s*"([^"]+)"/);
+  const tokenUriMatch = raw.match(/"token_uri"\s*:\s*"([^"]+)"/);
+
+  // Private key is special — it contains \n inside the value
+  const pkMatch = raw.match(/"private_key"\s*:\s*"(-----BEGIN PRIVATE KEY-----[^"]*-----END PRIVATE KEY-----\\n)"/);
+
+  if (emailMatch && pkMatch) {
+    console.log("Parsed credentials via regex fallback");
+    return {
+      client_email: emailMatch[1],
+      private_key: pkMatch[1],
+      token_uri: tokenUriMatch?.[1] || "https://oauth2.googleapis.com/token",
+    };
   }
 
   throw new Error(
-    `GOOGLE_CREDENTIALS_JSON is invalid. Save the exact raw credentials.json content in the secret. Parse attempts: ${attempts.join(" | ")}`
+    `GOOGLE_CREDENTIALS_JSON is invalid. Could not extract client_email and private_key. Ensure the full JSON from credentials.json is saved as the secret value.`
   );
 }
 
@@ -168,6 +156,10 @@ serve(async (req) => {
     if (!credentialsJson) {
       throw new Error("GOOGLE_CREDENTIALS_JSON is not configured");
     }
+
+    // Debug: log first 100 chars to understand the format
+    console.log("CREDENTIALS_JSON starts with:", JSON.stringify(credentialsJson.substring(0, 100)));
+    console.log("CREDENTIALS_JSON length:", credentialsJson.length);
 
     const creds = parseServiceAccountCredentials(credentialsJson);
 
