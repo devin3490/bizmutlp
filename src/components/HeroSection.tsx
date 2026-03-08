@@ -1,0 +1,100 @@
+import { motion } from "framer-motion";
+import { BismuthGeometry } from "./BismuthGeometry";
+
+export const HeroSection = () => {
+  const scrollToForm = () => {
+    document.getElementById("application")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToLifestyle = () => {
+    document.getElementById("lifestyle")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <BismuthGeometry />
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left - Content */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="flex items-center gap-3 mb-8"
+            >
+              <div className="w-10 h-10 bg-bismuth-purple flex items-center justify-center">
+                <span className="text-foreground font-black text-lg">B</span>
+              </div>
+              <span className="text-foreground font-semibold text-xl tracking-wider uppercase">
+                Bismuth
+              </span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] mb-6 text-gold"
+            >
+              Build the Life Most People Only Dream About.
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="text-lg md:text-xl text-foreground/90 mb-10 leading-relaxed max-w-xl"
+            >
+              Join an elite team of ambitious individuals unlocking high income, global travel,
+              world-class networks, and unstoppable personal growth. Your next chapter starts here.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="flex flex-wrap gap-4"
+            >
+              <button
+                onClick={scrollToForm}
+                className="bg-bismuth-purple text-foreground px-8 py-4 text-lg font-semibold tracking-wide hover:bg-bismuth-pink transition-colors duration-300"
+              >
+                Apply Now
+              </button>
+              <button
+                onClick={scrollToLifestyle}
+                className="border border-silver text-silver px-8 py-4 text-lg font-semibold tracking-wide hover:bg-bismuth-pink hover:text-foreground hover:border-bismuth-pink transition-colors duration-300"
+              >
+                Learn More
+              </button>
+            </motion.div>
+          </motion.div>
+
+          {/* Right - Video Placeholder */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="glass rounded-lg overflow-hidden"
+          >
+            <div className="aspect-video flex items-center justify-center relative">
+              <div className="absolute inset-0 bg-muted/50" />
+              <div className="relative z-10 text-center">
+                <div className="w-20 h-20 border-2 border-silver rounded-full flex items-center justify-center mx-auto mb-4 hover:border-bismuth-pink transition-colors cursor-pointer">
+                  <div className="w-0 h-0 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent border-l-[20px] border-l-silver ml-1" />
+                </div>
+                <p className="text-silver text-sm uppercase tracking-widest">Watch Our Story</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
