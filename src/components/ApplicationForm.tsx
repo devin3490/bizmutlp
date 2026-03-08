@@ -493,17 +493,6 @@ export const ApplicationForm = () => {
             </motion.div>
           </div>
 
-          {/* Desktop: Manager Panel */}
-          <div className="hidden lg:block lg:col-span-1 order-3">
-            <ManagerPanel answers={answers} totalScore={totalScore} currentQuestion={currentQuestion} />
-          </div>
-
-          {/* Mobile: Full panel after completion */}
-          {completed && (
-            <div className="lg:hidden order-4">
-              <ManagerPanel answers={answers} totalScore={totalScore} currentQuestion={currentQuestion} />
-            </div>
-          )}
         </div>
       </div>
     </section>
