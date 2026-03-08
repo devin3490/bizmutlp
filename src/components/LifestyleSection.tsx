@@ -6,6 +6,7 @@ import lifestyleNetworking from "@/assets/lifestyle-networking.jpg";
 import lifestyleJet from "@/assets/lifestyle-jet.jpg";
 import lifestyleApartment from "@/assets/lifestyle-apartment.jpg";
 import lifestyleMeeting from "@/assets/lifestyle-meeting.jpg";
+import lifestyleHousing from "@/assets/lifestyle-housing.png";
 
 interface LifestyleItemProps {
   badge: string;
@@ -42,6 +43,13 @@ const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed
 );
 
 const lifestyleData = [
+  {
+    badge: "Logement payé",
+    headline: "On paye ton habitation à Québec ou Sherbrooke",
+    description: "Concentre-toi sur ta performance sans te soucier du loyer. Bizmut prend en charge ton logement dans nos villes d'opération : Québec et Sherbrooke. Un avantage concret pour te permettre de performer à 100%.",
+    image: lifestyleHousing,
+    imageAlt: "Logement moderne payé par Bizmut",
+  },
   {
     badge: "Réseau d'élite",
     headline: "Connecte-toi avec le Top 1%",
