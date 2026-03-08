@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    dataLayer: Record<string, unknown>[];
+  }
+}
+
 import { motion } from "framer-motion";
 import { CheckCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
