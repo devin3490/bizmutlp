@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { decode as base64Decode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 
 const corsHeaders = {
@@ -8,38 +7,45 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Google Sheets API helpers
+function toBase64Url(input: Uint8Array): string {
+  return base64Encode(input)
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+
+function strToBase64Url(str: string): string {
+  return toBase64Url(new TextEncoder().encode(str));
+}
+
 async function getAccessToken(
   clientEmail: string,
   privateKey: string
 ): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
-  const header = { alg: "RS256", typ: "JWT" };
-  const claim = {
+  const header = JSON.stringify({ alg: "RS256", typ: "JWT" });
+  const claim = JSON.stringify({
     iss: clientEmail,
     scope: "https://www.googleapis.com/auth/spreadsheets",
     aud: "https://oauth2.googleapis.com/token",
     exp: now + 3600,
     iat: now,
-  };
+  });
 
-  const toBase64Url = (data: Uint8Array | string) => {
-    const str = typeof data === "string" ? data : base64Encode(data);
-    return str.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-  };
+  const unsignedJwt = `${strToBase64Url(header)}.${strToBase64Url(claim)}`;
 
-  const encode = (obj: unknown) =>
-    toBase64Url(btoa(JSON.stringify(obj)));
+  // Parse PEM private key
+  const pemBody = privateKey
+    .replace(/-----BEGIN PRIVATE KEY-----/g, "")
+    .replace(/-----END PRIVATE KEY-----/g, "")
+    .replace(/[\r\n\s]/g, "");
 
-  const unsignedJwt = `${encode(header)}.${encode(claim)}`;
-
-  // Import the private key
-  const pemContents = privateKey
-    .replace(/-----BEGIN PRIVATE KEY-----/, "")
-    .replace(/-----END PRIVATE KEY-----/, "")
-    .replace(/\s/g, "");
-
-  const binaryKey = base64Decode(pemContents);
+  // Decode base64 PEM to binary
+  const binaryStr = atob(pemBody);
+  const binaryKey = new Uint8Array(binaryStr.length);
+  for (let i = 0; i < binaryStr.length; i++) {
+    binaryKey[i] = binaryStr.charCodeAt(i);
+  }
 
   const cryptoKey = await crypto.subtle.importKey(
     "pkcs8",
@@ -57,7 +63,6 @@ async function getAccessToken(
 
   const signedJwt = `${unsignedJwt}.${toBase64Url(new Uint8Array(signature))}`;
 
-  // Exchange for access token
   const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -124,7 +129,6 @@ serve(async (req) => {
 
     const { answers, totalScore, qualified } = await req.json();
 
-    // Build row: Timestamp, then each answer in order, then score, then status
     const timestamp = new Date().toISOString();
     const row = [
       timestamp,
@@ -135,8 +139,12 @@ serve(async (req) => {
       qualified ? "Qualifié" : "Non qualifié",
     ];
 
-    // Fix escaped newlines in private key
+    // Replace literal \n with actual newlines in private key
     const formattedKey = privateKey.replace(/\\n/g, "\n");
+
+    console.log("PEM key starts with:", formattedKey.substring(0, 40));
+    console.log("Client email:", clientEmail);
+    console.log("Sheet ID:", sheetId);
 
     const accessToken = await getAccessToken(clientEmail, formattedKey);
     await appendToSheet(accessToken, sheetId, row);
