@@ -21,6 +21,7 @@ interface QuizSession {
   currentQuestion: number;
   totalScore: number;
   completed: boolean;
+  submitted: boolean;
   timestamps: Record<number, string>;
 }
 
