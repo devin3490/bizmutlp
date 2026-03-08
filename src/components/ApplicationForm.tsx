@@ -103,6 +103,7 @@ export const ApplicationForm = () => {
         currentQuestion: isLast ? currentQuestion : currentQuestion + 1,
         totalScore: newScore,
         completed: isLast,
+        submitted: false,
         timestamps: { ...session.timestamps, [question.id]: new Date().toISOString() },
       };
 
