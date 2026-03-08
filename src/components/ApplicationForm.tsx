@@ -2,9 +2,8 @@ import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { quizQuestions, SCORE_THRESHOLD, type QuizOption } from "@/data/quizQuestions";
 import { ManagerPanel } from "./ManagerPanel";
-import { Progress } from "./components/ui/progress";
 import { CheckCircle, ArrowRight, RotateCcw, Sparkles } from "lucide-react";
-import { Button } from "./components/ui/button";
+import { Button } from "@/components/ui/button";
 
 const SESSION_KEY = "bizmut_quiz_session";
 
