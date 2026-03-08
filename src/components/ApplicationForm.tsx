@@ -78,6 +78,7 @@ export const ApplicationForm = () => {
     setTextValue("");
     setOtherValue("");
     setShowOther(false);
+    setValidationError("");
   }, [currentQuestion]);
 
   // Submit to Google Sheets when quiz is completed
