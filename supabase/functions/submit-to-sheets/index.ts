@@ -182,26 +182,39 @@ serve(async (req) => {
     console.log("Using client_email:", creds.client_email);
 
     const { answers, totalScore, qualified } = await req.json();
-
-    // Questions with scores (choice questions): 7, 8, 10, 12, 14
-    const scoredQuestions = new Set([7, 8, 10, 12, 14]);
+    const a = answers as Record<string, { label: string; score: number }>;
 
     const timestamp = new Date().toISOString();
-    const row: string[] = [timestamp];
-
-    // Build row in strict question order (1-16)
-    // For scored questions: answer + score in next column
-    for (let id = 1; id <= 16; id++) {
-      const answer = (answers as Record<string, { label: string; score: number }>)[String(id)];
-      row.push(answer?.label ?? "");
-      if (scoredQuestions.has(id)) {
-        row.push(answer ? String(answer.score) : "");
-      }
-    }
-
-    // Total score + qualification status
-    row.push(String(totalScore));
-    row.push(qualified ? "Qualifié" : "Non qualifié");
+    const row: string[] = [
+      timestamp,                                // Timestamp
+      a["5"]?.label ?? "",                       // Email Address
+      a["1"]?.label ?? "",                       // Prénom
+      a["2"]?.label ?? "",                       // Nom
+      a["3"]?.label ?? "",                       // Âge
+      a["4"]?.label ?? "",                       // Numéro de téléphone
+      a["5"]?.label ?? "",                       // Adresse courriel
+      a["6"]?.label ?? "",                       // Ville de résidence
+      a["7"]?.label ?? "",                       // Expérience porte-à-porte
+      a["8"]?.label ?? "",                       // Q1 environnement
+      a["8"] ? String(a["8"].score) : "",        // Score question 1
+      a["9"]?.label ?? "",                       // Q2 inacceptable
+      a["9"] ? String(a["9"].score) : "",        // Score question 2
+      a["10"]?.label ?? "",                      // Q3 type de journée
+      a["10"] ? String(a["10"].score) : "",      // Score question 3
+      a["11"]?.label ?? "",                      // Q4 situation récente
+      a["11"] ? String(a["11"].score) : "",      // Score question 4
+      a["12"]?.label ?? "",                      // Q5 objectif important
+      a["12"] ? String(a["12"].score) : "",      // Score question 5
+      a["13"]?.label ?? "",                      // Q6 mériter ta place
+      a["13"] ? String(a["13"].score) : "",      // Score question 6
+      a["14"]?.label ?? "",                      // Q7 modèle de travail
+      a["14"] ? String(a["14"].score) : "",      // Score question 7
+      a["15"]?.label ?? "",                      // Q8 moments de croissance
+      a["15"] ? String(a["15"].score) : "",      // Score question 8
+      a["16"]?.label ?? "",                      // Q9 sous pression
+      a["16"] ? String(a["16"].score) : "",      // Score question 9
+      String(totalScore),                        // Column 28
+    ];
 
     const accessToken = await getAccessToken(creds);
     console.log("Access token obtained, calling Sheets API...");
