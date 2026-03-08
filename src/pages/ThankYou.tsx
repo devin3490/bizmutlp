@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    dataLayer: Record<string, unknown>[];
+  }
+}
+
 import { motion } from "framer-motion";
 import { CheckCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,6 +14,10 @@ const ThankYou = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Push qualified_lead event to dataLayer for GTM
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "qualified_lead" });
+
     const script = document.createElement("script");
     script.src = "https://assets.calendly.com/assets/external/widget.js";
     script.async = true;
