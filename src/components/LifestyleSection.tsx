@@ -1,15 +1,9 @@
 import { motion } from "framer-motion";
 
-import lifestyleCar from "@/assets/lifestyle-car.jpg";
-import lifestyleResort from "@/assets/lifestyle-resort.jpg";
-import lifestyleNetworking from "@/assets/lifestyle-networking.jpg";
-import lifestyleJet from "@/assets/lifestyle-jet.jpg";
-import lifestyleApartment from "@/assets/lifestyle-apartment.jpg";
-import lifestyleMeeting from "@/assets/lifestyle-meeting.jpg";
+import lifestyleGoogleReviews from "@/assets/lifestyle-google-reviews.png";
 import lifestyleGames from "@/assets/lifestyle-games.png";
 import lifestyleHousing from "@/assets/lifestyle-housing.png";
 import lifestyleTrip from "@/assets/lifestyle-trip.png";
-import lifestyleGoogleReviews from "@/assets/lifestyle-google-reviews.png";
 
 interface LifestyleItemProps {
   badge: string;
