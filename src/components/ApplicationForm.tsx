@@ -105,9 +105,14 @@ export const ApplicationForm = () => {
         timestamps: { ...session.timestamps, [question.id]: new Date().toISOString() },
       };
 
-      setTimeout(() => setSession(updated), 250);
+      setTimeout(() => {
+        setSession(updated);
+        if (isLast) {
+          submitToSheets(newAnswers, newScore);
+        }
+      }, 250);
     },
-    [question, answers, totalScore, currentQuestion, totalQuestions, session.timestamps]
+    [question, answers, totalScore, currentQuestion, totalQuestions, session.timestamps, submitToSheets]
   );
 
   const handleChoiceAnswer = useCallback(
