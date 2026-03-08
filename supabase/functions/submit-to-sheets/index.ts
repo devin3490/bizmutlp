@@ -91,18 +91,14 @@ async function getAccessToken(creds: ServiceAccountCredentials): Promise<string>
   const pemBody = privateKey
     .replace(/-----BEGIN PRIVATE KEY-----/g, "")
     .replace(/-----END PRIVATE KEY-----/g, "")
-    .replace(/[\r\n\s]/g, "");
+    .replace(/[\r\n\s]/g, "")
+    // Remove any non-base64 characters
+    .replace(/[^A-Za-z0-9+/=]/g, "");
 
   console.log("PEM body length:", pemBody.length);
-  console.log("PEM body first 20 chars:", pemBody.substring(0, 20));
-  console.log("PEM body last 20 chars:", pemBody.substring(pemBody.length - 20));
 
-  // Decode base64 PEM to binary using atob
-  const binaryStr = atob(pemBody);
-  const binaryKey = new Uint8Array(binaryStr.length);
-  for (let i = 0; i < binaryStr.length; i++) {
-    binaryKey[i] = binaryStr.charCodeAt(i);
-  }
+  // Use Deno std base64 decode instead of atob
+  const binaryKey = base64Decode(pemBody);
 
   const cryptoKey = await crypto.subtle.importKey(
     "pkcs8",
