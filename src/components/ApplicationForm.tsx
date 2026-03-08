@@ -64,6 +64,13 @@ export const ApplicationForm = () => {
     saveSession(session);
   }, [session]);
 
+  // Auto-retry submission on load if completed but not submitted
+  useEffect(() => {
+    if (completed && !submitted && !submitting && Object.keys(answers).length === totalQuestions) {
+      submitToSheets(answers, totalScore);
+    }
+  }, []);
+
   useEffect(() => {
     setTextValue("");
     setOtherValue("");
