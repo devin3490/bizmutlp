@@ -20,30 +20,49 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-glass">
+    <motion.nav
+      initial={{ y: -80 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="fixed top-0 left-0 right-0 z-50 glass border-b border-glass"
+    >
       <div className="container mx-auto px-6 flex items-center justify-between h-16">
-        <button onClick={() => scrollTo("#hero")} className="flex items-center gap-3">
+        <motion.button
+          onClick={() => scrollTo("#hero")}
+          className="flex items-center gap-3"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <img src={bismuthLogo} alt="Bizmut" className="h-8 w-auto" />
           <span className="text-foreground font-semibold text-lg tracking-wider uppercase">Bizmut</span>
-        </button>
+        </motion.button>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <button
+          {navLinks.map((link, i) => (
+            <motion.button
               key={link.href}
               onClick={() => scrollTo(link.href)}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 + i * 0.1 }}
+              whileHover={{ y: -2 }}
               className="text-muted-foreground text-sm font-medium tracking-wide uppercase hover:text-bismuth-pink transition-colors"
             >
               {link.label}
-            </button>
+            </motion.button>
           ))}
-          <button
+          <motion.button
             onClick={() => scrollTo("#application")}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.7, type: "spring" }}
+            whileHover={{ scale: 1.08, boxShadow: "0 0 20px hsla(270, 60%, 55%, 0.4)" }}
+            whileTap={{ scale: 0.95 }}
             className="bg-bismuth-purple text-foreground px-5 py-2 text-sm font-semibold tracking-wide hover:bg-bismuth-pink transition-colors"
           >
             Postuler
-          </button>
+          </motion.button>
         </div>
 
         {/* Mobile toggle */}
@@ -62,25 +81,31 @@ export const Navbar = () => {
             className="md:hidden glass border-t border-glass overflow-hidden"
           >
             <div className="flex flex-col p-6 gap-4">
-              {navLinks.map((link) => (
-                <button
+              {navLinks.map((link, i) => (
+                <motion.button
                   key={link.href}
                   onClick={() => scrollTo(link.href)}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.08 }}
                   className="text-muted-foreground text-sm font-medium tracking-wide uppercase hover:text-bismuth-pink transition-colors text-left"
                 >
                   {link.label}
-                </button>
+                </motion.button>
               ))}
-              <button
+              <motion.button
                 onClick={() => scrollTo("#application")}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.35 }}
                 className="bg-bismuth-purple text-foreground px-5 py-3 text-sm font-semibold tracking-wide hover:bg-bismuth-pink transition-colors mt-2"
               >
                 Postuler
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 };

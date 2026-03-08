@@ -18,33 +18,67 @@ interface LifestyleItemProps {
 
 const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index, link }: LifestyleItemProps) => (
   <motion.div
-    initial={{ opacity: 0, y: 60 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-100px" }}
-    transition={{ duration: 0.7, delay: index * 0.1 }}
+    initial={{ opacity: 0, y: 80, scale: 0.95 }}
+    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+    viewport={{ once: true, margin: "-80px" }}
+    transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
     className={`grid lg:grid-cols-2 gap-12 items-center ${reversed ? "lg:direction-rtl" : ""}`}
   >
-    <div className={`${reversed ? "lg:order-2" : ""}`}>
-      <div className="glass rounded-lg overflow-hidden">
-        <img src={image} alt={imageAlt} className="w-full aspect-[4/3] object-cover" loading="lazy" />
+    <motion.div
+      className={`${reversed ? "lg:order-2" : ""}`}
+      whileHover={{ scale: 1.03 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    >
+      <div className="glass rounded-lg overflow-hidden group relative">
+        <motion.img
+          src={image}
+          alt={imageAlt}
+          className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-110"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
-    </div>
+    </motion.div>
 
     <div className={`${reversed ? "lg:order-1" : ""} space-y-5`}>
-      <span className="inline-block bg-bismuth-teal/20 text-bismuth-teal px-4 py-1.5 text-sm font-semibold uppercase tracking-wider">
+      <motion.span
+        initial={{ opacity: 0, x: reversed ? 30 : -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+        className="inline-block bg-bismuth-teal/20 text-bismuth-teal px-4 py-1.5 text-sm font-semibold uppercase tracking-wider"
+      >
         {badge}
-      </span>
-      <h3 className="text-3xl md:text-4xl font-bold text-gold leading-tight">{headline}</h3>
-      <p className="text-foreground/80 text-lg leading-relaxed">{description}</p>
+      </motion.span>
+      <motion.h3
+        initial={{ opacity: 0, x: reversed ? 40 : -40 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.4 + index * 0.1, duration: 0.6 }}
+        className="text-3xl md:text-4xl font-bold text-gold leading-tight"
+      >
+        {headline}
+      </motion.h3>
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
+        className="text-foreground/80 text-lg leading-relaxed"
+      >
+        {description}
+      </motion.p>
       {link && (
-        <a
+        <motion.a
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 text-bismuth-gold hover:text-bismuth-teal transition-colors font-semibold text-lg underline underline-offset-4"
+          whileHover={{ x: 8 }}
+          transition={{ type: "spring", stiffness: 400 }}
         >
           {link.label} →
-        </a>
+        </motion.a>
       )}
     </div>
   </motion.div>
@@ -94,10 +128,32 @@ export const LifestyleSection = () => (
         viewport={{ once: true }}
         className="text-center mb-8"
       >
-        <span className="text-bismuth-teal text-sm uppercase tracking-widest font-semibold">Pourquoi Bizmut</span>
-        <h2 className="text-4xl md:text-5xl font-black text-gold mt-4">
+        <motion.span
+          initial={{ opacity: 0, letterSpacing: "0.5em" }}
+          whileInView={{ opacity: 1, letterSpacing: "0.15em" }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-bismuth-teal text-sm uppercase font-semibold block"
+        >
+          Pourquoi Bizmut
+        </motion.span>
+        <motion.h2
+          initial={{ opacity: 0, y: 20, scale: 0.9 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.7 }}
+          className="text-4xl md:text-5xl font-black text-gold mt-4"
+        >
           L'avantage Bizmut
-        </h2>
+        </motion.h2>
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+          className="h-1 w-24 mx-auto mt-4 rounded-full"
+          style={{ background: "linear-gradient(90deg, hsl(var(--bismuth-teal)), hsl(var(--bismuth-purple)))" }}
+        />
       </motion.div>
 
       {lifestyleData.map((item, i) => (
