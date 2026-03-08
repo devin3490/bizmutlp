@@ -73,6 +73,13 @@ const lifestyleData = [
     imageAlt: "Station balnéaire tropicale",
   },
   {
+    badge: "Voyage emblématique",
+    headline: "Un voyage de fin d'été légendaire",
+    description: "Chaque été, Bizmut organise son emblématique voyage de fin de saison pour récompenser les performeurs. L'année passée, c'était en République Dominicaine. Cette année? Une destination luxueuse… et mystère. Reste à l'affût.",
+    image: lifestyleTrip,
+    imageAlt: "Voyage Bizmut été 2025 en République Dominicaine",
+  },
+  {
     badge: "Accès privilégié",
     headline: "Vis la vie au plus haut niveau",
     description: "Jets privés, retraites de luxe et accès VIP à des événements partout dans le monde. Ce n'est pas un rêve — c'est le standard Bizmut.",
