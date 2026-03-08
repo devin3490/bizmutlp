@@ -30,7 +30,7 @@ export const HeroSection = () => {
             >
               <img src={bismuthLogo} alt="Bismuth logo" className="h-10 w-auto" />
               <span className="text-foreground font-semibold text-xl tracking-wider uppercase">
-Bizmut
+Bismuth
               </span>
             </motion.div>
 
