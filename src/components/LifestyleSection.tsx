@@ -7,6 +7,7 @@ import lifestyleJet from "@/assets/lifestyle-jet.jpg";
 import lifestyleApartment from "@/assets/lifestyle-apartment.jpg";
 import lifestyleMeeting from "@/assets/lifestyle-meeting.jpg";
 import lifestyleHousing from "@/assets/lifestyle-housing.png";
+import lifestyleTrip from "@/assets/lifestyle-trip.png";
 
 interface LifestyleItemProps {
   badge: string;
@@ -70,6 +71,13 @@ const lifestyleData = [
     description: "Des stations balnéaires tropicales aux grandes métropoles — construis une carrière qui te permet de vivre sans frontières. Ton bureau est là où tu le choisis.",
     image: lifestyleResort,
     imageAlt: "Station balnéaire tropicale",
+  },
+  {
+    badge: "Voyage emblématique",
+    headline: "Un voyage de fin d'été légendaire",
+    description: "Chaque été, Bizmut organise son emblématique voyage de fin de saison pour récompenser les performeurs. L'année passée, c'était en République Dominicaine. Cette année? Une destination luxueuse… et mystère. Reste à l'affût.",
+    image: lifestyleTrip,
+    imageAlt: "Voyage Bizmut été 2025 en République Dominicaine",
   },
   {
     badge: "Accès privilégié",
