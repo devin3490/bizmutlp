@@ -82,6 +82,19 @@ const ThankYouFailed = () => {
         </motion.p>
 
         <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
+          className="w-full mb-8"
+        >
+          <div
+            className="calendly-inline-widget"
+            data-url="https://calendly.com/maths-converset57/appel-de-presentation-bizmut"
+            style={{ minWidth: "320px", height: "700px" }}
+          />
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
