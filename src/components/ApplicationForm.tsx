@@ -334,7 +334,7 @@ export const ApplicationForm = () => {
           )}
 
           {/* Form column */}
-          <div className="lg:col-span-2 order-2 lg:order-1">
+          <div>
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
