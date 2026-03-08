@@ -19,9 +19,10 @@ interface LifestyleItemProps {
   imageAlt: string;
   reversed?: boolean;
   index: number;
+  link?: { url: string; label: string };
 }
 
-const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index }: LifestyleItemProps) => (
+const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index, link }: LifestyleItemProps) => (
   <motion.div
     initial={{ opacity: 0, y: 60 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -41,6 +42,16 @@ const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed
       </span>
       <h3 className="text-3xl md:text-4xl font-bold text-gold leading-tight">{headline}</h3>
       <p className="text-foreground/80 text-lg leading-relaxed">{description}</p>
+      {link && (
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-bismuth-gold hover:text-bismuth-teal transition-colors font-semibold text-lg underline underline-offset-4"
+        >
+          {link.label} →
+        </a>
+      )}
     </div>
   </motion.div>
 );
