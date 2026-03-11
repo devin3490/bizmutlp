@@ -106,7 +106,7 @@ const lifestyleData = [
   {
     badge: "Voyage emblématique",
     headline: "Un voyage de fin d'été légendaire",
-    description: "Chaque été, Bizmut organise son emblématique voyage de fin de saison pour récompenser les performeurs. L'année passée, c'était en République Dominicaine. Cette année? Une destination luxueuse… et mystère. Reste à l'affût.",
+    description: "Cet été, Bizmut emmène ses meilleurs vendeurs en République Dominicaine. Un voyage all-inclusive réservé exclusivement à ceux qui performent. Tu veux y être? Prouve que t'es le ou la meilleur(e).",
     image: lifestyleTrip,
     imageAlt: "Voyage Bizmut été 2026 en République Dominicaine",
   },
