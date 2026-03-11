@@ -94,8 +94,8 @@ const lifestyleData = [
   },
   {
     badge: "La référence au Québec",
-    headline: "La plus grosse compagnie de lavage de vitres à Québec et en Estrie",
-    description: "Avec une note de 4.8/5 sur Google, Bizmut s'est imposé comme le leader incontesté du lavage de vitres à Québec et en Estrie. Rejoins une équipe qui a fait ses preuves et qui est reconnue par ses clients.",
+    headline: "Le contrat de marketing d'O'Splash, leader du lavage de vitres",
+    description: "Bizmut détient le contrat de marketing exclusif de Services O'Splash inc., la plus grosse compagnie de lavage de vitres à Québec et en Estrie. Avec une note de 4.8/5 sur Google, O'Splash est reconnue pour son excellence et la satisfaction de ses clients. En rejoignant Bizmut, tu représentes une marque qui a déjà fait ses preuves sur le terrain.",
     image: lifestyleGoogleReviews,
     imageAlt: "4.8 sur 5 étoiles sur Google Reviews",
     link: {
