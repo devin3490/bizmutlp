@@ -89,7 +89,7 @@ const ThankYouFailed = () => {
         >
           <div
             className="calendly-inline-widget"
-            data-url="https://calendly.com/maths-converset57/appel-de-presentation-bizmut"
+            data-url="https://calendly.com/maths-converset57/appel-de-presentation-bizmut-1"
             style={{ minWidth: "320px", height: "700px" }}
           />
         </motion.div>
