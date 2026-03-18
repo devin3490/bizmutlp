@@ -15,6 +15,7 @@ interface LifestyleItemProps {
   reversed?: boolean;
   index: number;
   link?: { url: string; label: string };
+  backgroundImage?: string;
 }
 
 const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index, link }: LifestyleItemProps) => (
