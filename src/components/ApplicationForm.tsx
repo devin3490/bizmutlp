@@ -360,7 +360,7 @@ export const ApplicationForm = () => {
               size="lg"
               className="bg-bismuth-teal hover:bg-bismuth-teal/90 text-white text-lg px-8 py-6 rounded-lg font-semibold"
             >
-              Remplis le formulaire
+              Change ton été 2026
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </motion.div>
