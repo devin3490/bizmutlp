@@ -59,15 +59,18 @@ const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed
       >
         {headline}
       </motion.h3>
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
-        className="text-foreground/80 text-lg leading-relaxed"
-      >
-        {description}
-      </motion.p>
+      {description.split('\n\n').map((paragraph, idx) => (
+        <motion.p
+          key={idx}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 + index * 0.1 + idx * 0.1, duration: 0.6 }}
+          className="text-foreground/80 text-lg leading-relaxed"
+        >
+          {paragraph}
+        </motion.p>
+      ))}
       {link && (
         <motion.a
           href={link.url}
@@ -95,7 +98,7 @@ const lifestyleData = [
   {
     badge: "La référence au Québec",
     headline: "Le contrat marketing de Services O'Splash",
-    description: "Bizmut détient le contrat de marketing exclusif de Services O'Splash inc., la plus grosse compagnie de lavage de vitres à Québec et en Estrie. Avec une note de 4.8/5 sur Google, O'Splash est reconnue pour son excellence et la satisfaction de ses clients. En rejoignant Bizmut, tu représentes une marque qui a déjà fait ses preuves sur le terrain.",
+    description: "Bizmut détient le contrat de marketing (porte-à-porte) de Services O'Splash inc., une des plus grosses compagnies de lavage extérieur à Québec et en Estrie.\n\nConcrètement, ça veut dire que sur le terrain, tu représentes directement une entreprise établie, reconnue et déjà performante.\n\nAvec plus de 3 000 clients servis l'année dernière et une note de 4.8/5 sur Google, O'Splash s'est bâtie une solide réputation basée sur la qualité de son service et la satisfaction de ses clients.",
     image: lifestyleGoogleReviews,
     imageAlt: "4.8 sur 5 étoiles sur Google Reviews",
     link: {
