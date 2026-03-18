@@ -59,15 +59,18 @@ const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed
       >
         {headline}
       </motion.h3>
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
-        className="text-foreground/80 text-lg leading-relaxed"
-      >
-        {description}
-      </motion.p>
+      {description.split('\n\n').map((paragraph, idx) => (
+        <motion.p
+          key={idx}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 + index * 0.1 + idx * 0.1, duration: 0.6 }}
+          className="text-foreground/80 text-lg leading-relaxed"
+        >
+          {paragraph}
+        </motion.p>
+      ))}
       {link && (
         <motion.a
           href={link.url}
