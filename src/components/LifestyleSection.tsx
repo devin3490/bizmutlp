@@ -94,7 +94,7 @@ const lifestyleData = [
   },
   {
     badge: "La référence au Québec",
-    headline: "Le contrat de marketing d'O'Splash, leader du lavage de vitres",
+    headline: "Le contrat marketing de Services O'Splash",
     description: "Bizmut détient le contrat de marketing exclusif de Services O'Splash inc., la plus grosse compagnie de lavage de vitres à Québec et en Estrie. Avec une note de 4.8/5 sur Google, O'Splash est reconnue pour son excellence et la satisfaction de ses clients. En rejoignant Bizmut, tu représentes une marque qui a déjà fait ses preuves sur le terrain.",
     image: lifestyleGoogleReviews,
     imageAlt: "4.8 sur 5 étoiles sur Google Reviews",
