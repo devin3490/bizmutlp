@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 
 import lifestyleGoogleReviews from "@/assets/lifestyle-google-reviews.png";
+import lifestyleOsplashCollage from "@/assets/lifestyle-osplash-collage.jpg";
 import lifestyleGames from "@/assets/lifestyle-games.png";
 import lifestyleTrip from "@/assets/lifestyle-trip.png";
 import lifestyleHousing from "@/assets/lifestyle-housing.jpeg";
