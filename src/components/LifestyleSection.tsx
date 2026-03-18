@@ -15,9 +15,10 @@ interface LifestyleItemProps {
   reversed?: boolean;
   index: number;
   link?: { url: string; label: string };
+  backgroundImage?: string;
 }
 
-const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index, link }: LifestyleItemProps) => (
+const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index, link, backgroundImage }: LifestyleItemProps) => (
   <motion.div
     initial={{ opacity: 0, y: 80, scale: 0.95 }}
     whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -31,13 +32,20 @@ const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
       <div className="glass rounded-lg overflow-hidden group relative">
+        {backgroundImage && (
+          <img
+            src={backgroundImage}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )}
         <motion.img
           src={image}
           alt={imageAlt}
-          className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-110"
+          className={`w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-110 ${backgroundImage ? "relative z-10 opacity-90" : ""}`}
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
       </div>
     </motion.div>
 
@@ -102,6 +110,7 @@ const lifestyleData = [
     description: "Bizmut détient le contrat de marketing (porte-à-porte) de Services O'Splash inc., une des plus grosses compagnies de lavage extérieur à Québec et en Estrie.\n\nConcrètement, ça veut dire que sur le terrain, tu représentes directement une entreprise établie, reconnue et déjà performante.\n\nAvec plus de 3 000 clients servis l'année dernière et une note de 4.8/5 sur Google, O'Splash s'est bâtie une solide réputation basée sur la qualité de son service et la satisfaction de ses clients.",
     image: lifestyleGoogleReviews,
     imageAlt: "4.8 sur 5 étoiles sur Google Reviews",
+    backgroundImage: lifestyleOsplashCollage,
     link: {
       url: "https://share.google/He800ykh8pAH6yeGC",
       label: "Voir les avis Google",
