@@ -106,13 +106,7 @@ const lifestyleData = [
     badge: "Logement payé",
     headline: "On paye ton habitation à Québec ou Sherbrooke",
     description: "Concentre-toi sur ta performance sans te soucier du loyer. Bizmut prend en charge ton logement dans nos villes d'opération : Québec et Sherbrooke. Un avantage concret pour te permettre de performer à 100%.",
-    image: "",
-    imageAlt: "Logement moderne payé par Bizmut",
-    collageImages: [
-      { src: teamDinner, alt: "Souper d'équipe Bizmut" },
-      { src: teamCoffee, alt: "Équipe Bizmut en pause café" },
-      { src: teamMeeting, alt: "Réunion d'équipe Bizmut" },
-    ],
+    image: lifestyleHousing,
   },
   {
     badge: "La référence au Québec",
