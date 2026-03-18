@@ -361,7 +361,7 @@ export const ApplicationForm = () => {
               className="bg-bismuth-teal hover:bg-bismuth-teal/90 text-white text-lg px-8 py-6 rounded-lg font-semibold"
             >
               Change ton été 2026
-              <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
             </Button>
           </motion.div>
         ) : (
