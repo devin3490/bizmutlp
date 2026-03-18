@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import bismuthLogo from "@/assets/bismuth-logo.png";
+import bizmutTextLogo from "@/assets/bizmut-text-logo.jpeg";
 
 export const Footer = () => (
   <footer className="py-12 border-t border-border">
@@ -12,13 +12,12 @@ export const Footer = () => (
         className="flex items-center justify-center gap-3 mb-4"
       >
         <motion.img
-          src={bismuthLogo}
+          src={bizmutTextLogo}
           alt="Bizmut logo"
-          className="h-8 w-auto"
-          whileHover={{ rotate: 360 }}
-          transition={{ duration: 0.6 }}
+          className="h-8 w-auto invert"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
         />
-        <span className="text-foreground font-semibold tracking-wider uppercase">Bizmut</span>
       </motion.div>
       <motion.p
         initial={{ opacity: 0 }}
