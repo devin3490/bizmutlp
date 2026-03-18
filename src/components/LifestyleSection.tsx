@@ -110,7 +110,6 @@ const lifestyleData = [
     description: "Bizmut détient le contrat de marketing (porte-à-porte) de Services O'Splash inc., une des plus grosses compagnies de lavage extérieur à Québec et en Estrie.\n\nConcrètement, ça veut dire que sur le terrain, tu représentes directement une entreprise établie, reconnue et déjà performante.\n\nAvec plus de 3 000 clients servis l'année dernière et une note de 4.8/5 sur Google, O'Splash s'est bâtie une solide réputation basée sur la qualité de son service et la satisfaction de ses clients.",
     image: lifestyleGoogleReviews,
     imageAlt: "4.8 sur 5 étoiles sur Google Reviews",
-    backgroundImage: lifestyleOsplashCollage,
     link: {
       url: "https://share.google/He800ykh8pAH6yeGC",
       label: "Voir les avis Google",
