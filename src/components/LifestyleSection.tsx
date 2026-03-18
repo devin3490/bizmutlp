@@ -32,13 +32,20 @@ const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
       <div className="glass rounded-lg overflow-hidden group relative">
+        {backgroundImage && (
+          <img
+            src={backgroundImage}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )}
         <motion.img
           src={image}
           alt={imageAlt}
-          className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-110"
+          className={`w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-110 ${backgroundImage ? "relative z-10 opacity-90" : ""}`}
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
       </div>
     </motion.div>
 
