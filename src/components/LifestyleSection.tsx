@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 
 import lifestyleGoogleReviews from "@/assets/lifestyle-google-reviews.png";
 import lifestyleGames from "@/assets/lifestyle-games.png";
-import lifestyleHousing from "@/assets/lifestyle-housing.png";
 import lifestyleTrip from "@/assets/lifestyle-trip.png";
+import teamDinner from "@/assets/lifestyle-team-dinner.jpeg";
+import teamCoffee from "@/assets/lifestyle-team-coffee.jpeg";
+import teamMeeting from "@/assets/lifestyle-team-meeting.png";
 
 interface LifestyleItemProps {
   badge: string;
