@@ -128,7 +128,7 @@ export const HeroSection = () => {
                   className="cursor-pointer"
                   onClick={() => document.getElementById("application")?.scrollIntoView({ behavior: "smooth" })}
                 >
-                  <ArrowDown className="text-bismuth-gold" size={32} />
+                  <ArrowDown className="text-bismuth-gold" size={44} />
                 </motion.div>
               </motion.div>
             </motion.div>
