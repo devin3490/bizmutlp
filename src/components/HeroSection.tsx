@@ -75,15 +75,12 @@ export const HeroSection = () => {
               className="flex items-center justify-center gap-3 mb-8"
             >
               <motion.img
-                src={bismuthLogo}
+                src={bizmutTextLogo}
                 alt="Bizmut logo"
-                className="h-10 w-auto"
-                animate={{ rotate: [0, 5, -5, 0] }}
+                className="h-12 w-auto invert"
+                animate={{ scale: [1, 1.02, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
-              <span className="text-foreground font-semibold text-xl tracking-wider uppercase">
-                Bizmut
-              </span>
             </motion.div>
 
 

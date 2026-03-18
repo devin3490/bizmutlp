@@ -33,8 +33,7 @@ export const Navbar = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <img src={bismuthLogo} alt="Bizmut" className="h-8 w-auto" />
-          <span className="text-foreground font-semibold text-lg tracking-wider uppercase">Bizmut</span>
+          <img src={bizmutTextLogo} alt="Bizmut" className="h-8 w-auto invert" />
         </motion.button>
 
         {/* Desktop */}
