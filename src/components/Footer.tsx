@@ -14,7 +14,7 @@ export const Footer = () => (
         <motion.img
           src={bizmutTextLogo}
           alt="Bizmut logo"
-          className="h-8 w-auto invert"
+          className="h-12 w-auto invert"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
         />

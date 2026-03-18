@@ -77,7 +77,7 @@ export const HeroSection = () => {
               <motion.img
                 src={bizmutTextLogo}
                 alt="Bizmut logo"
-                className="h-12 w-auto invert"
+                className="h-20 w-auto invert"
                 animate={{ scale: [1, 1.02, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
