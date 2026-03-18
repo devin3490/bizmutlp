@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 
 import lifestyleGoogleReviews from "@/assets/lifestyle-google-reviews.png";
 import lifestyleGames from "@/assets/lifestyle-games.png";
-import lifestyleHousing from "@/assets/lifestyle-housing.png";
 import lifestyleTrip from "@/assets/lifestyle-trip.png";
+import teamDinner from "@/assets/lifestyle-team-dinner.jpeg";
+import teamCoffee from "@/assets/lifestyle-team-coffee.jpeg";
+import teamMeeting from "@/assets/lifestyle-team-meeting.png";
 
 interface LifestyleItemProps {
   badge: string;
@@ -16,7 +18,7 @@ interface LifestyleItemProps {
   link?: { url: string; label: string };
 }
 
-const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index, link }: LifestyleItemProps) => (
+const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index, link, collageImages }: LifestyleItemProps & { collageImages?: { src: string; alt: string }[] }) => (
   <motion.div
     initial={{ opacity: 0, y: 80, scale: 0.95 }}
     whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -29,15 +31,29 @@ const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed
       whileHover={{ scale: 1.03 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
-      <div className="glass rounded-lg overflow-hidden group relative">
-        <motion.img
-          src={image}
-          alt={imageAlt}
-          className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-110"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      </div>
+      {collageImages ? (
+        <div className="grid grid-cols-2 gap-3 h-full">
+          <div className="glass rounded-lg overflow-hidden row-span-2">
+            <img src={collageImages[2].src} alt={collageImages[2].alt} className="w-full h-full object-cover object-center" style={{ objectPosition: "center 30%" }} loading="lazy" />
+          </div>
+          <div className="glass rounded-lg overflow-hidden">
+            <img src={collageImages[0].src} alt={collageImages[0].alt} className="w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div className="glass rounded-lg overflow-hidden">
+            <img src={collageImages[1].src} alt={collageImages[1].alt} className="w-full h-full object-cover" loading="lazy" />
+          </div>
+        </div>
+      ) : (
+        <div className="glass rounded-lg overflow-hidden group relative">
+          <motion.img
+            src={image}
+            alt={imageAlt}
+            className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        </div>
+      )}
     </motion.div>
 
     <div className={`${reversed ? "lg:order-1" : ""} space-y-5`}>
@@ -92,8 +108,13 @@ const lifestyleData = [
     badge: "Logement payé",
     headline: "On paye ton habitation à Québec ou Sherbrooke",
     description: "Concentre-toi sur ta performance sans te soucier du loyer. Bizmut prend en charge ton logement dans nos villes d'opération : Québec et Sherbrooke. Un avantage concret pour te permettre de performer à 100%.",
-    image: lifestyleHousing,
+    image: "",
     imageAlt: "Logement moderne payé par Bizmut",
+    collageImages: [
+      { src: teamDinner, alt: "Souper d'équipe Bizmut" },
+      { src: teamCoffee, alt: "Équipe Bizmut en pause café" },
+      { src: teamMeeting, alt: "Réunion d'équipe Bizmut" },
+    ],
   },
   {
     badge: "La référence au Québec",
