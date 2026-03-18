@@ -18,7 +18,7 @@ interface LifestyleItemProps {
   backgroundImage?: string;
 }
 
-const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index, link }: LifestyleItemProps) => (
+const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index, link, backgroundImage }: LifestyleItemProps) => (
   <motion.div
     initial={{ opacity: 0, y: 80, scale: 0.95 }}
     whileInView={{ opacity: 1, y: 0, scale: 1 }}
