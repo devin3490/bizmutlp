@@ -103,7 +103,7 @@ const lifestyleData = [
     imageAlt: "4.8 sur 5 étoiles sur Google Reviews",
     link: {
       url: "https://share.google/He800ykh8pAH6yeGC",
-      label: "Voir nos avis Google",
+      label: "Voir les avis Google",
     },
   },
   {
