@@ -102,7 +102,7 @@ export const HeroSection = () => {
                   animation: "gradient-shift 4s ease infinite",
                 }}
               >
-                25 000 $
+                20 000 $
               </motion.span>
               <br />
               <AnimatedText text="cet été grâce au" className="text-foreground" />
