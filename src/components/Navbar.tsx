@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import bismuthLogo from "@/assets/bismuth-logo.png";
+import bizmutTextLogo from "@/assets/bizmut-text-logo.jpeg";
 
 const navLinks = [
   { label: "Accueil", href: "#hero" },
