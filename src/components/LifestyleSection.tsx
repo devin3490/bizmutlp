@@ -116,7 +116,7 @@ const lifestyleData = [
   {
     badge: "Bizmut Games",
     headline: "Work hard. Play harder.",
-    description: "Bienvenue aux Bizmut Games. Chez Bizmut, on prend la cohésion au sérieux. Les Bizmut Games sont une série de défis et de compétitions amicales qui rassemblent l'équipe autour du jeu, du dépassement et de la collaboration.",
+    description: "Les Bizmut Games, ce sont des défis et des compétitions qui se déroulent tout au long de l'été, où toute l'équipe s'affronte dans un esprit de performance et de fun.\n\nLe but : se dépasser, créer une énergie de groupe forte et gagner des prix.\n\nQue ce soit sur le terrain ou en dehors, chaque défi est une occasion de se challenger, de connecter avec l'équipe et de rendre l'été encore plus intense.",
     image: lifestyleGames,
     imageAlt: "Bizmut Games — prix à gagner tout l'été",
   },
