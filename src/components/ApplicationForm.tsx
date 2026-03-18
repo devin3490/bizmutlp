@@ -343,11 +343,33 @@ export const ApplicationForm = () => {
     }
   };
 
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <section id="application" className="py-10 md:py-16 relative">
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        {/* Section title */}
-
+        {!showForm ? (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <Button
+              onClick={() => setShowForm(true)}
+              size="lg"
+              className="bg-bismuth-teal hover:bg-bismuth-teal/90 text-white text-lg px-8 py-6 rounded-lg font-semibold"
+            >
+              Remplis le formulaire
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </motion.div>
+        ) : (
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
         <div className="flex flex-col gap-6 lg:gap-8 max-w-3xl mx-auto">
           {/* Mobile: Progress bar (no score) */}
           {totalAnswered > 0 && !completed && (
@@ -535,6 +557,8 @@ export const ApplicationForm = () => {
           </div>
 
         </div>
+        </motion.div>
+        )}
       </div>
     </section>
   );
