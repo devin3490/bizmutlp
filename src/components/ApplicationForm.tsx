@@ -557,6 +557,8 @@ export const ApplicationForm = () => {
           </div>
 
         </div>
+        </motion.div>
+        )}
       </div>
     </section>
   );
