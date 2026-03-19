@@ -72,7 +72,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="flex items-center justify-center gap-3 mb-8"
+              className="flex items-center justify-center gap-3 mb-12"
             >
               <motion.img
                 src={bizmutTextLogo}
