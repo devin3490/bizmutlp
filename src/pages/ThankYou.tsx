@@ -67,7 +67,7 @@ const ThankYou = () => {
           transition={{ delay: 0.4 }}
           className="text-lg text-muted-foreground mb-8"
         >
-          Réserve un moment où tu es sûr(e) d'être disponible pour ton appel de présentation.
+          Réserve un moment où tu es sûr(e) d'être disponible pour ton appel de présentation. On se rejoint là-haut ! 🚀
         </motion.p>
 
         <motion.div
