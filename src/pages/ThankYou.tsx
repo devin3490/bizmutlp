@@ -65,30 +65,9 @@ const ThankYou = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-lg text-muted-foreground mb-6"
+          className="text-lg text-muted-foreground mb-8"
         >
-          Ton profil correspond à nos critères d'excellence. Tu es pré-qualifié(e) pour rejoindre Bizmut.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="inline-block px-6 py-3 rounded-lg font-semibold text-base mb-8"
-          style={{
-            background: `linear-gradient(135deg, hsl(var(--bismuth-teal)), hsl(var(--bismuth-purple)))`,
-          }}
-        >
-          <span className="text-foreground">Profil Qualifié ✨</span>
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className="text-sm text-muted-foreground mb-8"
-        >
-          Notre équipe te contactera très bientôt pour la suite du processus.
+          Réserve une place pour ton appel de présentation
         </motion.p>
 
         <motion.div
