@@ -76,21 +76,26 @@ export const HeroSection = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.3 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] mb-6 tracking-tight"
+              className="text-4xl md:text-7xl lg:text-8xl font-black leading-[0.95] mb-6 tracking-tight"
             >
-              <AnimatedText text="Gagne " className="text-foreground" />
-              <motion.span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: "linear-gradient(135deg, hsl(var(--bismuth-gold)), hsl(var(--bismuth-pink)), hsl(var(--bismuth-purple)))",
-                  backgroundSize: "200% 200%",
-                  animation: "gradient-shift 4s ease infinite",
-                }}
-              >
-                20 000 $
-              </motion.span>
+              <span className="inline">
+                <AnimatedText text="Gagne " className="text-foreground" />
+                <motion.span
+                  className="bg-clip-text text-transparent whitespace-nowrap"
+                  style={{
+                    backgroundImage: "linear-gradient(135deg, hsl(var(--bismuth-gold)), hsl(var(--bismuth-pink)), hsl(var(--bismuth-purple)))",
+                    backgroundSize: "200% 200%",
+                    animation: "gradient-shift 4s ease infinite",
+                  }}
+                >
+                  20 000 $
+                </motion.span>
+              </span>
               <br />
-              <AnimatedText text="cet été grâce au" className="text-foreground" />
+              <span className="inline">
+                <AnimatedText text="cet été grâce " className="text-foreground" />
+                <AnimatedText text="au" className="text-foreground whitespace-nowrap" />
+              </span>
               <br />
               <AnimatedText text="porte-à-porte." className="text-bismuth-teal italic" />
             </motion.h1>
