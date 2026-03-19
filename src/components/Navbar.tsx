@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import bizmutTextLogo from "@/assets/bizmut-text-logo.jpeg";
+import bizmutTextLogo from "@/assets/bizmut-text-logo.png";
 
 const navLinks = [
   { label: "Accueil", href: "#hero" },
@@ -33,7 +33,7 @@ export const Navbar = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <img src={bizmutTextLogo} alt="Bizmut" className="h-16 w-auto invert mix-blend-screen" />
+          <img src={bizmutTextLogo} alt="Bizmut" className="h-16 w-auto invert" />
         </motion.button>
 
         {/* Desktop */}

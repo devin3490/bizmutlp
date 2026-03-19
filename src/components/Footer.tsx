@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import bizmutTextLogo from "@/assets/bizmut-text-logo.jpeg";
+import bizmutTextLogo from "@/assets/bizmut-text-logo.png";
 
 export const Footer = () => (
   <footer className="py-12 border-t border-border">
@@ -14,7 +14,7 @@ export const Footer = () => (
         <motion.img
           src={bizmutTextLogo}
           alt="Bizmut logo"
-          className="h-12 w-auto invert mix-blend-screen"
+          className="h-12 w-auto invert"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
         />

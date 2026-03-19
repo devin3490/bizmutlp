@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { BismuthGeometry } from "./BismuthGeometry";
-import bizmutTextLogo from "@/assets/bizmut-text-logo.jpeg";
+import bizmutTextLogo from "@/assets/bizmut-text-logo.png";
 
 const letterVariants = {
   hidden: { opacity: 0, y: 50, rotateX: -90 },
@@ -77,7 +77,7 @@ export const HeroSection = () => {
               <motion.img
                 src={bizmutTextLogo}
                 alt="Bizmut logo"
-                className="h-28 md:h-36 w-auto invert mix-blend-screen"
+                className="h-28 md:h-36 w-auto invert"
                 animate={{ scale: [1, 1.02, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
