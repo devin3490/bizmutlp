@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { BismuthGeometry } from "./BismuthGeometry";
-import bizmutTextLogo from "@/assets/bizmut-text-logo.jpeg";
+import bizmutTextLogo from "@/assets/bizmut-text-logo.png";
 
 const letterVariants = {
   hidden: { opacity: 0, y: 50, rotateX: -90 },
