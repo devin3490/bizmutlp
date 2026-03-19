@@ -33,7 +33,7 @@ export const Navbar = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <img src={bizmutTextLogo} alt="Bizmut" className="h-16 w-auto invert" />
+          <img src={bizmutTextLogo} alt="Bizmut" className="h-16 w-auto invert mix-blend-screen" />
         </motion.button>
 
         {/* Desktop */}
