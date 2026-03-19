@@ -74,12 +74,17 @@ const ThankYou = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
-          className="w-full mb-8"
+          className="w-full mb-8 grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           <div
             className="calendly-inline-widget"
             data-url="https://calendly.com/maths-converset57/appel-de-presentation-bizmut-1"
-            style={{ minWidth: "320px", height: "700px" }}
+            style={{ minWidth: "280px", height: "700px" }}
+          />
+          <div
+            className="calendly-inline-widget"
+            data-url="https://calendly.com/frankblanchard13/new-meeting"
+            style={{ minWidth: "280px", height: "700px" }}
           />
         </motion.div>
 
