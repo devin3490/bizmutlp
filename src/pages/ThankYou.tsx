@@ -31,7 +31,7 @@ const ThankYou = () => {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
-        className="text-center max-w-lg"
+        className="text-center max-w-5xl w-full"
       >
         <motion.div
           initial={{ scale: 0 }}
