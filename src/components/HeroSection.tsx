@@ -68,20 +68,8 @@ export const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="flex items-center justify-center gap-3 mb-12"
-            >
-              <motion.img
-                src={bizmutTextLogo}
-                alt="Bizmut logo"
-                className="h-24 md:h-28 w-auto invert"
-                animate={{ scale: [1, 1.02, 1] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </motion.div>
+
+
 
 
             <motion.h1
