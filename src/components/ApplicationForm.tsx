@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { quizQuestions, type QuizQuestion } from "@/data/quizQuestions";
@@ -44,18 +44,28 @@ export const ApplicationForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const { answers, currentQuestion, completed, submitted } = session;
 
-  const totalQuestions = quizQuestions.length;
+  // Build visible questions list based on conditional logic
+  const visibleQuestions = useMemo(() => {
+    return quizQuestions.filter((q) => {
+      // Question 71 only shown if Q7 = "Oui"
+      if (q.id === 71) {
+        return answers[7]?.label === "Oui";
+      }
+      return true;
+    });
+  }, [answers]);
+
+  const totalQuestions = visibleQuestions.length;
   const progress = (Object.keys(answers).length / totalQuestions) * 100;
-  const question = quizQuestions[currentQuestion];
+  const question = visibleQuestions[currentQuestion];
   const totalAnswered = Object.keys(answers).length;
 
   useEffect(() => {
     saveSession(session);
   }, [session]);
 
-  // Auto-retry submission on load if completed but not submitted
   useEffect(() => {
-    if (completed && !submitted && !submitting && Object.keys(answers).length === totalQuestions) {
+    if (completed && !submitted && !submitting && Object.keys(answers).length >= totalQuestions) {
       submitToSheets(answers);
     }
   }, []);
@@ -88,7 +98,13 @@ export const ApplicationForm = () => {
     (label: string, score: number) => {
       if (!question) return;
       const newAnswers = { ...answers, [question.id]: { label, score } };
-      const isLast = currentQuestion >= totalQuestions - 1;
+      
+      // Recalculate visible questions with new answers
+      const newVisible = quizQuestions.filter((q) => {
+        if (q.id === 71) return newAnswers[7]?.label === "Oui";
+        return true;
+      });
+      const isLast = currentQuestion >= newVisible.length - 1;
 
       const updated: QuizSession = {
         answers: newAnswers,
@@ -105,7 +121,7 @@ export const ApplicationForm = () => {
         }
       }, 250);
     },
-    [question, answers, currentQuestion, totalQuestions, session.timestamps, submitToSheets]
+    [question, answers, currentQuestion, session.timestamps, submitToSheets]
   );
 
   const handleChoiceAnswer = useCallback(
@@ -207,6 +223,36 @@ export const ApplicationForm = () => {
                 </div>
               </motion.button>
             ))}
+          </div>
+        );
+
+      case "scale":
+        return (
+          <div className="space-y-4">
+            <div className="grid grid-cols-11 gap-1.5 sm:gap-2">
+              {Array.from({ length: q.max - q.min + 1 }, (_, i) => q.min + i).map((val) => (
+                <motion.button
+                  key={val}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: val * 0.03, duration: 0.2 }}
+                  whileHover={{
+                    scale: 1.1,
+                    borderColor: "hsl(174, 60%, 45%)",
+                    boxShadow: "0 0 15px hsla(174, 60%, 45%, 0.2)",
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => advance(String(val), val)}
+                  className="aspect-square flex items-center justify-center rounded-lg border border-border bg-secondary/30 active:bg-secondary/60 md:hover:bg-secondary/60 transition-colors duration-200 text-sm md:text-base font-medium text-foreground"
+                >
+                  {val}
+                </motion.button>
+              ))}
+            </div>
+            <div className="flex justify-between text-[10px] md:text-xs text-muted-foreground px-1">
+              <span>Pas du tout</span>
+              <span>Totalement</span>
+            </div>
           </div>
         );
 
