@@ -18,33 +18,53 @@ interface LifestyleItemProps {
   backgroundImage?: string;
 }
 
-const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed, index, link, backgroundImage }: LifestyleItemProps) => (
+const LifestyleItem = ({ badge, headline, description, image, imageAlt, index, link, backgroundImage }: LifestyleItemProps) => (
   <motion.div
     initial={{ opacity: 0, y: 80, scale: 0.95 }}
     whileInView={{ opacity: 1, y: 0, scale: 1 }}
     viewport={{ once: true, margin: "-80px" }}
     transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
-    className={`grid lg:grid-cols-2 gap-12 items-center`}
+    className="space-y-6 max-w-4xl mx-auto"
   >
-    <div className={`${reversed ? "lg:order-2" : "lg:order-1"} space-y-5`}>
-      <motion.span
-        initial={{ opacity: 0, x: reversed ? 30 : -30 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
-        className="inline-block bg-bismuth-teal/20 text-bismuth-teal px-4 py-1.5 text-sm font-semibold uppercase tracking-wider"
-      >
-        {badge}
-      </motion.span>
-      <motion.h3
-        initial={{ opacity: 0, x: reversed ? 40 : -40 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4 + index * 0.1, duration: 0.6 }}
-        className="text-3xl md:text-4xl font-bold text-gold leading-tight"
-      >
-        {headline}
-      </motion.h3>
+    <motion.span
+      initial={{ opacity: 0, y: -10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+      className="inline-block bg-bismuth-teal/20 text-bismuth-teal px-4 py-1.5 text-sm font-semibold uppercase tracking-wider"
+    >
+      {badge}
+    </motion.span>
+
+    <motion.h3
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.4 + index * 0.1, duration: 0.6 }}
+      className="text-3xl md:text-4xl font-bold text-gold leading-tight"
+    >
+      {headline}
+    </motion.h3>
+
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    >
+      <div className="glass rounded-lg overflow-hidden group relative">
+        {backgroundImage && (
+          <img src={backgroundImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        )}
+        <motion.img
+          src={image}
+          alt={imageAlt}
+          className={`w-full aspect-[16/9] object-cover transition-transform duration-700 group-hover:scale-110 ${backgroundImage ? "relative z-10 opacity-90" : ""}`}
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
+      </div>
+    </motion.div>
+
+    <div className="space-y-4">
       {description.split('\n\n').map((paragraph, idx) => (
         <motion.p
           key={idx}
@@ -70,29 +90,6 @@ const LifestyleItem = ({ badge, headline, description, image, imageAlt, reversed
         </motion.a>
       )}
     </div>
-
-    <motion.div
-      className={`${reversed ? "lg:order-1" : "lg:order-2"}`}
-      whileHover={{ scale: 1.03 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-    >
-      <div className="glass rounded-lg overflow-hidden group relative">
-        {backgroundImage && (
-          <img
-            src={backgroundImage}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        )}
-        <motion.img
-          src={image}
-          alt={imageAlt}
-          className={`w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-110 ${backgroundImage ? "relative z-10 opacity-90" : ""}`}
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
-      </div>
-    </motion.div>
   </motion.div>
 );
 
