@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import bizmutTextLogo from "@/assets/bizmut-text-logo.jpeg";
+import bizmutTextLogo from "@/assets/bizmut-text-logo.png";
 
 export const Footer = () => (
   <footer className="py-12 border-t border-border">
