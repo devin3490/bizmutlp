@@ -7,7 +7,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const SHEET_ID = "1pqeuCD4m9p-2IbAnwyWMQRvYtWgGNRi-JRfR0OaSOMc";
+const SHEET_ID = "1B4R0AlFFksMEjld8tKYcfK6Uy91XDWm2jsl_vmlmarM";
 
 function toBase64Url(input: Uint8Array): string {
   return base64Encode(input)
