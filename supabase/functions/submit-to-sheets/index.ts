@@ -162,14 +162,17 @@ serve(async (req) => {
     const timestamp = new Date().toISOString();
     const row: string[] = [
       timestamp,
-      a["5"]?.label ?? "",  // Email
-      a["1"]?.label ?? "",  // Prénom
-      a["2"]?.label ?? "",  // Nom
-      a["3"]?.label ?? "",  // Âge
-      a["4"]?.label ?? "",  // Téléphone
-      a["5"]?.label ?? "",  // Courriel
-      a["6"]?.label ?? "",  // Ville
-      a["7"]?.label ?? "",  // Expérience
+      a["5"]?.label ?? "",   // Email
+      a["1"]?.label ?? "",   // Prénom
+      a["2"]?.label ?? "",   // Nom
+      a["3"]?.label ?? "",   // Âge
+      a["4"]?.label ?? "",   // Téléphone
+      a["5"]?.label ?? "",   // Courriel
+      a["6"]?.label ?? "",   // Ville
+      a["7"]?.label ?? "",   // Porte-à-porte (Oui/Non)
+      a["71"]?.label ?? "",  // Industrie & montant
+      a["8"]?.label ?? "",   // Échelle 6j/7
+      a["9"]?.label ?? "",   // Échelle déplacement
     ];
 
     const accessToken = await getAccessToken(creds);

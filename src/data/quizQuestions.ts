@@ -26,7 +26,13 @@ export interface QuizQuestionChoice extends QuizQuestionBase {
   allowOther?: boolean;
 }
 
-export type QuizQuestion = QuizQuestionText | QuizQuestionTextarea | QuizQuestionChoice;
+export interface QuizQuestionScale extends QuizQuestionBase {
+  type: "scale";
+  min: number;
+  max: number;
+}
+
+export type QuizQuestion = QuizQuestionText | QuizQuestionTextarea | QuizQuestionChoice | QuizQuestionScale;
 
 export const quizQuestions: QuizQuestion[] = [
   {
@@ -74,11 +80,34 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 7,
     type: "choice",
-    question: "As-tu déjà de l'expérience en porte-à-porte ou dans la vente ?",
+    question: "As-tu déjà fait du porte-à-porte ?",
     required: true,
     options: [
-      { label: "Oui", score: 5 },
-      { label: "Non mais je suis motivé(e)", score: 3 },
+      { label: "Oui", score: 0 },
+      { label: "Non", score: 0 },
     ],
+  },
+  {
+    id: 71,
+    type: "text",
+    question: "Dans quelle industrie et quel montant as-tu généré en ventes ?",
+    placeholder: "Ex: Télécommunications, 50 000$",
+    required: true,
+  },
+  {
+    id: 8,
+    type: "scale",
+    question: "Sur une échelle de 1 à 10, à quel point es-tu à l'aise de travailler 6 jours sur 7 ?",
+    required: true,
+    min: 0,
+    max: 10,
+  },
+  {
+    id: 9,
+    type: "scale",
+    question: "Sur une échelle de 1 à 10, à quel point es-tu à l'aise à l'idée de te déplacer dans une autre ville si le logement est fourni gratuitement ?",
+    required: true,
+    min: 0,
+    max: 10,
   },
 ];
