@@ -27,35 +27,25 @@ interface ServiceAccountCredentials {
 }
 
 function parseServiceAccountCredentials(raw: string): ServiceAccountCredentials {
-  // Try standard JSON parse first
   try {
     const parsed = JSON.parse(raw);
     if (parsed?.client_email && parsed?.private_key) {
       return { client_email: parsed.client_email, private_key: parsed.private_key, token_uri: parsed.token_uri || "https://oauth2.googleapis.com/token" };
     }
-  } catch {
-    // Fall through to regex extraction
-  }
+  } catch {}
 
-  // Try wrapping with braces
   try {
     const parsed = JSON.parse(`{${raw.trim()}}`);
     if (parsed?.client_email && parsed?.private_key) {
       return { client_email: parsed.client_email, private_key: parsed.private_key, token_uri: parsed.token_uri || "https://oauth2.googleapis.com/token" };
     }
-  } catch {
-    // Fall through to regex extraction
-  }
+  } catch {}
 
-  // Regex extraction fallback — works even with broken JSON formatting
   const emailMatch = raw.match(/"client_email"\s*:\s*"([^"]+)"/);
   const tokenUriMatch = raw.match(/"token_uri"\s*:\s*"([^"]+)"/);
-
-  // Private key is special — it contains \n inside the value
   const pkMatch = raw.match(/"private_key"\s*:\s*"(-----BEGIN PRIVATE KEY-----[^"]*-----END PRIVATE KEY-----\\n)"/);
 
   if (emailMatch && pkMatch) {
-    console.log("Parsed credentials via regex fallback");
     return {
       client_email: emailMatch[1],
       private_key: pkMatch[1],
@@ -63,9 +53,7 @@ function parseServiceAccountCredentials(raw: string): ServiceAccountCredentials 
     };
   }
 
-  throw new Error(
-    `GOOGLE_CREDENTIALS_JSON is invalid. Could not extract client_email and private_key. Ensure the full JSON from credentials.json is saved as the secret value.`
-  );
+  throw new Error("GOOGLE_CREDENTIALS_JSON is invalid.");
 }
 
 async function getAccessToken(creds: ServiceAccountCredentials): Promise<string> {
@@ -81,23 +69,16 @@ async function getAccessToken(creds: ServiceAccountCredentials): Promise<string>
 
   const unsignedJwt = `${strToBase64Url(header)}.${strToBase64Url(claim)}`;
 
-  // Parse PEM private key - handle various escape formats
   let privateKey = creds.private_key;
-  // Replace literal \n sequences with actual newlines
   privateKey = privateKey.replace(/\\n/g, "\n");
-  // Also handle double-escaped \\n
   privateKey = privateKey.replace(/\\\\n/g, "\n");
   
   const pemBody = privateKey
     .replace(/-----BEGIN PRIVATE KEY-----/g, "")
     .replace(/-----END PRIVATE KEY-----/g, "")
     .replace(/[\r\n\s]/g, "")
-    // Remove any non-base64 characters
     .replace(/[^A-Za-z0-9+/=]/g, "");
 
-  console.log("PEM body length:", pemBody.length);
-
-  // Use Deno std base64 decode instead of atob
   const binaryKey = base64Decode(pemBody);
 
   const cryptoKey = await crypto.subtle.importKey(
@@ -145,8 +126,6 @@ async function appendToSheet(accessToken: string, values: string[]) {
   });
 
   const data = await res.json();
-  console.log("Sheets API response status:", res.status);
-  console.log("Sheets API response body:", JSON.stringify(data));
   if (!res.ok) {
     throw new Error(`Google Sheets API error [${res.status}]: ${JSON.stringify(data)}`);
   }
@@ -159,13 +138,11 @@ serve(async (req) => {
   }
 
   try {
-    // Try individual secrets first, fall back to JSON
     let creds: ServiceAccountCredentials;
     const email = Deno.env.get("GOOGLE_SERVICE_ACCOUNT_EMAIL");
     const privateKey = Deno.env.get("GOOGLE_PRIVATE_KEY");
     
     if (email && privateKey) {
-      console.log("Using individual secrets. Email:", email);
       creds = {
         client_email: email,
         private_key: privateKey,
@@ -176,55 +153,26 @@ serve(async (req) => {
       if (!credentialsJson) {
         throw new Error("No Google credentials configured");
       }
-      console.log("CREDENTIALS_JSON starts with:", JSON.stringify(credentialsJson.substring(0, 100)));
       creds = parseServiceAccountCredentials(credentialsJson);
     }
-    console.log("Using client_email:", creds.client_email);
 
-    const { answers, totalScore, qualified, aiData } = await req.json();
+    const { answers } = await req.json();
     const a = answers as Record<string, { label: string; score: number }>;
-    const ai = aiData || {};
 
     const timestamp = new Date().toISOString();
     const row: string[] = [
-      timestamp,                                // Timestamp
-      a["5"]?.label ?? "",                       // Email Address
-      a["1"]?.label ?? "",                       // Prénom
-      a["2"]?.label ?? "",                       // Nom
-      a["3"]?.label ?? "",                       // Âge
-      a["4"]?.label ?? "",                       // Numéro de téléphone
-      a["5"]?.label ?? "",                       // Adresse courriel
-      a["6"]?.label ?? "",                       // Ville de résidence
-      a["7"]?.label ?? "",                       // Expérience porte-à-porte
-      a["8"]?.label ?? "",                       // Q1 environnement
-      ai.ai_scores?.["8"] ? String(ai.ai_scores["8"].score) : String(a["8"]?.score ?? ""),
-      a["9"]?.label ?? "",                       // Q2 inacceptable
-      ai.ai_scores?.["9"] ? String(ai.ai_scores["9"].score) : String(a["9"]?.score ?? ""),
-      a["10"]?.label ?? "",                      // Q3 type de journée
-      ai.ai_scores?.["10"] ? String(ai.ai_scores["10"].score) : String(a["10"]?.score ?? ""),
-      a["11"]?.label ?? "",                      // Q4 situation récente
-      ai.ai_scores?.["11"] ? String(ai.ai_scores["11"].score) : String(a["11"]?.score ?? ""),
-      a["12"]?.label ?? "",                      // Q5 objectif important
-      ai.ai_scores?.["12"] ? String(ai.ai_scores["12"].score) : String(a["12"]?.score ?? ""),
-      a["13"]?.label ?? "",                      // Q6 mériter ta place
-      ai.ai_scores?.["13"] ? String(ai.ai_scores["13"].score) : String(a["13"]?.score ?? ""),
-      a["14"]?.label ?? "",                      // Q7 modèle de travail
-      ai.ai_scores?.["14"] ? String(ai.ai_scores["14"].score) : String(a["14"]?.score ?? ""),
-      a["15"]?.label ?? "",                      // Q8 moments de croissance
-      ai.ai_scores?.["15"] ? String(ai.ai_scores["15"].score) : String(a["15"]?.score ?? ""),
-      a["16"]?.label ?? "",                      // Q9 sous pression
-      ai.ai_scores?.["16"] ? String(ai.ai_scores["16"].score) : String(a["16"]?.score ?? ""),
-      String(ai.total_score_raw ?? totalScore),  // Score brut
-      String(ai.coherence_coef ?? ""),           // Coeff cohérence
-      String(ai.total_score_adjusted ?? ""),     // Score ajusté
-      ai.status ?? (qualified ? "qualified" : "not_qualified"), // Statut
-      ai.coherence_reasoning ?? "",              // Raisonnement cohérence
-      // AI reasoning per open question
-      ...(["9", "11", "13", "15", "16"].map(qId => ai.ai_scores?.[qId]?.reasoning ?? "")),
+      timestamp,
+      a["5"]?.label ?? "",  // Email
+      a["1"]?.label ?? "",  // Prénom
+      a["2"]?.label ?? "",  // Nom
+      a["3"]?.label ?? "",  // Âge
+      a["4"]?.label ?? "",  // Téléphone
+      a["5"]?.label ?? "",  // Courriel
+      a["6"]?.label ?? "",  // Ville
+      a["7"]?.label ?? "",  // Expérience
     ];
 
     const accessToken = await getAccessToken(creds);
-    console.log("Access token obtained, calling Sheets API...");
     await appendToSheet(accessToken, row);
 
     return new Response(JSON.stringify({ success: true }), {
